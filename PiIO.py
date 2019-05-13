@@ -1,5 +1,5 @@
-#  example usage of PHiSideDriver PCB
-#  ==================================
+#  PiIO General library module
+#  ===========================
 #
 #  K Lawson April 2019
 # 
@@ -11,6 +11,7 @@
 from ADS1x15 import ADS1015
 import max31865
 import time
+
 
 class PiIO_EMA:
 	alpha=0

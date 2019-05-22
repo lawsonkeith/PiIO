@@ -88,6 +88,9 @@ class max31865(object):
 
 		[rtd_msb, rtd_lsb] = [out[1], out[2]]
 		rtd_ADC_Code = (( rtd_msb << 8 ) | rtd_lsb ) >> 1
+	
+		# KL Resistor comp
+		rtd_ADC_Code *= 402.0 / 400.0
 			
 		temp_C = self.calcPT100Temp(rtd_ADC_Code)
 
@@ -207,7 +210,7 @@ class FaultError(Exception):
 if __name__ == "__main__":
 
 	import max31865
-	csPin = 8
+	csPin = 18
 	misoPin = 9
 	mosiPin = 10
 	clkPin = 11

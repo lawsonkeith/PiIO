@@ -8,7 +8,7 @@
 #
 # IO Mapper class, maps GPIO # to output numbers
 #
-from ADS1x15 import ADS1015
+import Adafruit_ADS1x15 
 import max31865
 import time
 
@@ -201,7 +201,7 @@ class PiIO_TOF:
 class PiIO_Analog:
 	# GPIO Mapping
 	O1 = 5
-	O2 = 31
+	O2 = 6
 	O3 = 13
 	O4 = 16
 	O5 = 19
@@ -223,27 +223,36 @@ class PiIO_Analog:
 	data = 0;
 
 	def __init__(self,gain):
-		self.adc = ADS1015()
+		#self.adc = ADS1015()
+		self.adc = Adafruit_ADS1x15.ADS1015()
+
 		self.gain = gain
-		csPin = 8
+		csPin = 18
 		misoPin = 9
 		mosiPin = 10
 		clkPin = 11
 
 		self.max = max31865.max31865(csPin,misoPin,mosiPin,clkPin)
-		#return self.adc
+#		return self.adc
 
 	def get_raw(self,channel):
 		data = 0;
-		data = self.adc.read_adc(channel, self.gain)
-	#	print (channel,  "s:", data)
-		return data
+		data =  self.adc.read_adc(channel, self.gain)
+		time.sleep(.001)
+		return data  # 2032 is 10V @ gain of 2
 
 	def get_scaled(self,channel):
 		data = 0;
 		data = self.adc.read_adc(channel, self.gain)
-	#	print (channel,  "s:", data)
-		return data
+		# Rratio	0.2032520325 (100/492)
+		# Vmax		10V	
+		# Vadc@MAX	2.0325203252	
+		# Raw@MAX	0.992441565 x 2^11 = 2032.5203252033
+		#
+		# RafToVolts Scale		0.00492 
+		data *= 4.92 / 1000
+		time.sleep(.001)
+		return data #(volts)
 	
 	def get_temp(self):
 		tempC = self.max.readTemp()

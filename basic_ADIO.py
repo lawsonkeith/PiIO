@@ -11,6 +11,7 @@
 #
 from gpiozero import PWMLED
 from gpiozero import LED 	# in GPIOZero outputs are called LEDs???
+from gpiozero import Button
 from time import sleep
 from PiIO import PiIO_DO24_Mapper
 from PiIO import PiIO_Analog
@@ -24,40 +25,94 @@ from PiIO import PiIO_Analog
 #  -   8 = +/-0.512V
 #  -  16 = +/-0.256V
 # See table 3 in the ADS1015/ADS1115 datasheet for more info on gain.
-GAIN = 1
+GAIN = 2
 
+
+# @@@@ Hardware init @@@@
+#
+adc = PiIO_Analog(GAIN)
+run = LED(adc.RUN)
+PWM1 = PWMLED(adc.PWM1)
+PWM2 = PWMLED(adc.PWM2)
+IN1 = Button(adc.I1,pull_up=False)
+IN2 = Button(adc.I2,pull_up=False)
+IN3 = Button(adc.I3,pull_up=False)
+IN4 = Button(adc.I4,pull_up=False)
+O1 = LED(adc.O1)
+O2 = LED(adc.O2)
+O3 = LED(adc.O3)
+O4 = LED(adc.O4)
+O5 = LED(adc.O5)
+O6 = LED(adc.O6)
+O7 = LED(adc.O7)
+O8 = LED(adc.O8)
+OE = LED(adc.OE)
 # @@@@ Example code here @@@@
 #
 # attach a LED to Output 6 on the board.
 # then PWM at 10Hz, cycle duty cycle then.
 #
 
-# @@@@ Hardware init @@@@
-#
-#io = PiIO_DO24_Mapper()
-#o1 = LED(io.O1); 
-#o2 = LED(io.O2); 
-#o3 = LED(io.O3); 
-#o4 = LED(io.O4); 
-#o5 = LED(io.O5); 
-#o6 = LED(O6) 
-#o6 = PWMLED(io.O6,True,0,1000);
-#o7 = LED(io.O7); 
-#o8 = LED(io.O8); 
-#o9 = LED(io.O9); 
-#o10 = LED(io.O10); 
-#o11 = LED(io.O11); 
-#o12 = LED(io.O12); 
-#o13 = LED(io.O13); 
-#o14 = LED(io.O14); 
-#o15 = LED(io.O15); 
-#o16 = LED(io.O16); 
+print("> Do rate increase ch1")
+for x in range(100):
+	PWM1.value = x / 100.0
+	sleep(.02)
+	print(".",end='',flush=True)
+print("")
 
-adc = PiIO_Analog(GAIN)
+sleep(2)
+print("> Do rate increase ch2")
+for x in range(100):
+	PWM2.value = x / 100.0
+	sleep(.02)
+	print(".",end='',flush=True)
+print("")
 
+
+print("> reading ADC")
+data = .4
 for x in range(4):
-	data = adc.get_raw(x)	
-	print (data)
-	temp = adc.get_temp()
-	print (temp)
+	data = adc.get_scaled(x) 	
+	print (data,x)
+	data = adc.get_raw(x) 	
+	print (data,x)
 
+
+print("> Read temp")
+temp = adc.get_temp()
+print (temp)
+
+print("Read DI 1-4")
+for x in range(10):
+	print("> IN1: ",IN1.is_pressed," IN2: ",IN2.is_pressed," IN3 ",IN3.is_pressed," IN4 ",IN4.is_pressed)
+	sleep(1)
+
+print("> Output 1..8")
+OE.on()
+print("..1",end='',flush=True)	
+O1.on()
+sleep(2)
+print("..2",end='',flush=True)	
+O2.on()
+sleep(2)
+print("..3",end='',flush=True)	
+O3.on()
+sleep(2)
+print("..4",end='',flush=True)	
+O4.on()
+sleep(2)
+print("..5",end='',flush=True)	
+O5.on()
+sleep(2)
+print("..6",end='',flush=True)	
+O6.on()
+sleep(2)
+print("..7",end='',flush=True)	
+O7.on()
+sleep(2)
+print("..8",end='',flush=True)	
+O8.on()
+sleep(2)
+print("")
+print("> wait")
+sleep(10)

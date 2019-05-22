@@ -52,8 +52,19 @@ OE = LED(adc.OE)
 # attach a LED to Output 6 on the board.
 # then PWM at 10Hz, cycle duty cycle then.
 #
+run.blink(.100,.900)
 
-print("> Do rate increase ch1")
+
+print("> reading ADC 1..4")
+data = .4
+for x in range(4):
+	data = adc.get_scaled(x) 	
+	print (" ",x," scaled ","{:.2f}".format(data),sep='\t',end='')
+	data = adc.get_raw(x) 	
+	print ("         raw    ",data,sep='\t')
+
+
+print("> Do rate increase AO1")
 for x in range(100):
 	PWM1.value = x / 100.0
 	sleep(.02)
@@ -61,7 +72,7 @@ for x in range(100):
 print("")
 
 sleep(2)
-print("> Do rate increase ch2")
+print("> Do rate increase AO2")
 for x in range(100):
 	PWM2.value = x / 100.0
 	sleep(.02)
@@ -69,27 +80,18 @@ for x in range(100):
 print("")
 
 
-print("> reading ADC")
-data = .4
-for x in range(4):
-	data = adc.get_scaled(x) 	
-	print (data,x)
-	data = adc.get_raw(x) 	
-	print (data,x)
-
-
 print("> Read temp")
 temp = adc.get_temp()
-print (temp)
+print (" {:.2f}".format(temp)," DegC")
 
-print("Read DI 1-4")
+print("> Read DI 1-4")
 for x in range(10):
-	print("> IN1: ",IN1.is_pressed," IN2: ",IN2.is_pressed," IN3 ",IN3.is_pressed," IN4 ",IN4.is_pressed)
+	print(" IN1: ",IN1.is_pressed," IN2: ",IN2.is_pressed," IN3 ",IN3.is_pressed," IN4 ",IN4.is_pressed)
 	sleep(1)
 
-print("> Output 1..8")
+print("> DO Output 1..8")
 OE.on()
-print("..1",end='',flush=True)	
+print(" ..1",end='',flush=True)	
 O1.on()
 sleep(2)
 print("..2",end='',flush=True)	

@@ -36,3 +36,4 @@ basic_ADIO.py | Basic usage of analog PCB
 PiIO.py | Low level library holding PCB abstractions and utility functions
 basic_functs.py | examples for PiIO utility funciotns such as timer functs
 sudo pip3 install Adafruit-ADS1x15
+sudo python3 setup.py install

@@ -8,8 +8,8 @@
 #
 # IO Mapper class, maps GPIO # to output numbers
 #
-import Adafruit_ADS1x15 
-import max31865
+from PiIO.PiIO_ADS1x15 import ADS1015
+import PiIO.PiIO_max31865
 import time
 
 
@@ -223,8 +223,8 @@ class PiIO_Analog:
 	data = 0;
 
 	def __init__(self,gain):
-		#self.adc = ADS1015()
-		self.adc = Adafruit_ADS1x15.ADS1015()
+		self.adc = ADS1015()
+		#self.adc = Adafruit_ADS1x15.ADS1015()
 
 		self.gain = gain
 		csPin = 18
@@ -232,7 +232,7 @@ class PiIO_Analog:
 		mosiPin = 10
 		clkPin = 11
 
-		self.max = max31865.max31865(csPin,misoPin,mosiPin,clkPin)
+		self.max = PiIO.PiIO_max31865.max31865(csPin,misoPin,mosiPin,clkPin)
 #		return self.adc
 
 	def get_raw(self,channel):

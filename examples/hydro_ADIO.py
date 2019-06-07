@@ -89,7 +89,6 @@ def sleepMin(time):
 
 # @@@@ WEATHER and IRRIGATION TASK @@@@
 #
-
 def timed_task1():
 	global hours_no_water, irrigation_cnt
 	# use pyowm to get weather where I am
@@ -110,7 +109,7 @@ def timed_task1():
 			print('T1> increment counter')
 			hours_no_water += 1
 		# run irrigation if required
-		if(hours_no_water >= 36):
+		if(hours_no_water >= 60):
 			print('T1> Turn on irrigation');
 			#turn on solenoid
 			O2.on();
@@ -120,7 +119,8 @@ def timed_task1():
 			O2.off();
 			hours_no_water = 0
 		# wait an hour
-		sleepMin(60)
+		sleepMin(
+60)
 
 
 # @@@@ KEYBOARD INPUT @@@@
@@ -170,23 +170,12 @@ def timed_task3():
 				State = 0; #  btn release			
 				DO4.off() # LED
 				sleep(.05) # debounce
-	
+		# drive solenoid on timed off
 		relay_on = tof(0)
-		if(relay_on):
+		if(relay_on.tof()):
 			DO3.on()
 		else:
 			DO3.off()
-			
-		if(	IN1.is_pressed()):
-			O4.on() # LED
-			tof(1)
-		else:
-			O4.off()
-
-		if IN1.is_pressed():			
-			if(tof(0) == 0):
-				tof(1)
-
 
 
 # @@@@ Debugger  terminal @@@@
@@ -207,14 +196,36 @@ def timed_task4():
 		print()
 		print( 'Hours no water:\t',hours_no_water)
 		print( 'Irrigation cnt:\t',irrigation_cnt)
+		print( 'Irrigation on:\t',O2.is_lit)
 		print()
 		print( 'Fountain cnt:\t',fountain_cnt)
+		print( 'Fountain on:\t',O3.is_lit)
 		print()
 		print( 'beer temp setp:\t',beer_setp,'DegC')
 		print( 'beer temp:\t',beer_temp,'DegC')
+		print( 'heating on:\t',O1.is_lit)
 		print()
 		print( PiIO_col.REDB,'                                                                               ',PiIO_col.ENDC,sep='')
-		
+
+
+
+# @@@@@ BREWING @@@@@
+#
+def timed_task5():
+
+	global beer_temp, beer_setp
+	#
+	deadband = 0.5;
+	while True:
+		sleepMin(1)
+		beer_temp = adc.get_temp()
+		if beer_temp < (beer_setp - deadband):
+			O1.on()
+		if beer_temp > (beer_setp + deadband):
+			O1.off()
+
+
+
 # @@@@ Example code here @@@@
 #
 # attach a LED to Output 6 on the board.
@@ -225,12 +236,13 @@ OE.on()
 
 # Submit parallel tasks to executor
 #
-executor = concurrent.futures.ThreadPoolExecutor(max_workers=4)
+executor = concurrent.futures.ThreadPoolExecutor(max_workers=5)
 
 executor.submit(timed_task1)
 executor.submit(timed_task2)
 executor.submit(timed_task3)
 executor.submit(timed_task4)
+executor.submit(timed_task5)
 
 # Handle shutdown of threads so CTRL+C works
 try:

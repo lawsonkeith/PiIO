@@ -1,6 +1,6 @@
 #!/usr/bin/python3
-#  example usage of Analog PCB for basic hydraulic control
-#  =======================================================
+
+#  example usage of Analog PCB for basic hydraulic control =======================================================
 #
 #  K Lawson June 2019
 # 
@@ -32,15 +32,14 @@
 #
 
 import concurrent.futures 
-from termcolor import colored
 from gpiozero import PWMLED
 from gpiozero import LED 	# in GPIOZero outputs are called LEDs???
 from gpiozero import Button
 from time import sleep
 from PiIO import PiIO_DO24_Mapper
 from PiIO import PiIO_Analog
-from PiIO import PiIO_Watch
 from PiIO import PiIO_col
+from PiIO import PiIO_getc
 from pyowm import OWM
 
 # Choose a gain of 1 for reading voltages from 0 to 4.09V.
@@ -76,23 +75,30 @@ O8 = LED(adc.O8)
 OE = LED(adc.OE)
 
 hours_no_water = 0
+irrigation_cnt = 0
+fountain_cnt = 0
+fountain_mins = 0
+beer_setp = 18
+beer_temp = 0
 
 # sleep abstractions
 #
 def sleepMin(time):
 	sleep(time * 60)
 
-# @@@@ WEATHER TASK @@@@
+
+# @@@@ WEATHER and IRRIGATION TASK @@@@
 #
 
 def timed_task1():
-	print( PiIO_col.REDB,"T1> Starting",PiIO_col.ENDC)
+	global hours_no_water, irrigation_cnt
 	# use pyowm to get weather where I am
 	API_key = 'a3f08180a153e131e0e13d9d30a7c315'
 	owm = OWM(API_key)
 	# sett locale to my garden
 	obs = owm.weather_at_coords(54.92,-1.74)      
 	while True:	
+		# check weather forecast, see if there's any rain
 		print("T1> Checking weather")
 		w = obs.get_weather()
 		rain_str = w.get_detailed_status()
@@ -103,31 +109,44 @@ def timed_task1():
 		else:
 			print('T1> increment counter')
 			hours_no_water += 1
+		# run irrigation if required
+		if(hours_no_water >= 36):
+			print('T1> Turn on irrigation');
+			#turn on solenoid
+			O2.on();
+			irrigation_cnt+=1
+			sleepMin(3)
+			#solenoid off
+			O2.off();
+			hours_no_water = 0
 		# wait an hour
 		sleepMin(60)
 
-# @@@@ IRRIGATION SOLENOID CTRL @@@@
+
+# @@@@ KEYBOARD INPUT @@@@
 #
 def timed_task2():
-	print( PiIO_col.REDB,"T2> Starting",PiIO_col.ENDC)
-	sleepMin(1)
-	if(hours_no_water > 36):
-		print('T2> Turn on irrigation');
-		#turn on solenoid
-		O2.on();
-		sleepMin(3)
-		#solenoid off
-		O2.off();
-		hours_no_water = 0
-	
+	global beer_setp, irrigation_cnt, fountain_cnt 
+
+	while True:
+		sleep(.1)
+		c = PiIO_getc()
+		if c == '+':
+			beer_setp += .5
+		if c == '-':
+			beer_setp -= .5
+		if c == 'r':
+			irrigation_cnt = 0
+			fountain_cnt = 0
+
 
 # @@@@ WATER FOUNTAIN CTRL @@@@
 #
 def timed_task3():
-	print( PiIO_col.REDB,"T3> Starting",PiIO_col.ENDC)
-	on_time = 0 # seconds
+	global fountain_cnt, fountain_mins
+
 	relay_on = False
-	tof = PiIO_TOF(0,1800) # 30 min
+	tof = PiIO_TOF(0,fountain_mins * 60) # 30 min
 	while True:
 		state = 0
 		# @@@@ Button state machine @@@@
@@ -139,10 +158,12 @@ def timed_task3():
 				State = 1
 				DO4.on() # LED
 				if relay_on:
-					on_time += 1800
+					fountain_mins += 30
 				else:
-					on_time = 1800
-				tof.set_time = on_time
+					fountain_mins = 30
+				# change timer off setpoint
+				tof.set_time = fountain_mins * 60
+				fountain_cnt+=1
 		else: # wait for btn rel
 			tof(1) # arm off timer
 			if IN1.is_pressed() == 0:
@@ -168,26 +189,48 @@ def timed_task3():
 
 
 
-		
-		
+# @@@@ Debugger  terminal @@@@
+#
+def timed_task4():
+	global hours_no_water, fountain_cnt, irrigation_cnt, beer_setp, beer_temp
 
+	sleep(4)
+	count=0
+	while True:
+		sleep(1)
+		count+=1
+		print( PiIO_col.RESET,end='',sep='')
+		#          			 "_123456789_123456789_123456789_123456789_123456789_123456789_123456789_123456789
+		print( PiIO_col.REDB,'                       << hydro_ADIO Terminal debugger >>                      ',PiIO_col.ENDC,sep='')
+		print( 'Run time:\t',count,'(s)')
+		print( PiIO_col.REDB,'                                                                               ',PiIO_col.ENDC,sep='')
+		print()
+		print( 'Hours no water:\t',hours_no_water)
+		print( 'Irrigation cnt:\t',irrigation_cnt)
+		print()
+		print( 'Fountain cnt:\t',fountain_cnt)
+		print()
+		print( 'beer temp setp:\t',beer_setp,'DegC')
+		print( 'beer temp:\t',beer_temp,'DegC')
+		print()
+		print( PiIO_col.REDB,'                                                                               ',PiIO_col.ENDC,sep='')
+		
 # @@@@ Example code here @@@@
 #
 # attach a LED to Output 6 on the board.
 # then PWM at 10Hz, cycle duty cycle then.
 #
-RUN.blink(.100,.900)
+RUN.blink(.1,.9)
 OE.on()
-sleepMin(1)
-watch = PiIO_Watch()
 
 # Submit parallel tasks to executor
 #
-executor = concurrent.futures.ThreadPoolExecutor(max_workers=3)
+executor = concurrent.futures.ThreadPoolExecutor(max_workers=4)
 
 executor.submit(timed_task1)
 executor.submit(timed_task2)
 executor.submit(timed_task3)
+executor.submit(timed_task4)
 
 # Handle shutdown of threads so CTRL+C works
 try:
@@ -196,4 +239,4 @@ except KeyboardInterrupt:
 	executor._threads.clear()
 	concurrent.futures.thread._threads_queues.clear()
 
-print( PiIO_col.REDB,"T> done.",PiIO_col.ENDC)
+print( "done.")

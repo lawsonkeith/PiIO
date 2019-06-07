@@ -1,5 +1,4 @@
-#  PiIO General library module
-#  ===========================
+#  PiIO General library module ===========================
 #
 #  K Lawson April 2019
 # 
@@ -11,8 +10,84 @@
 from PiIO.PiIO_ADS1x15 import ADS1015
 import PiIO.PiIO_max31865
 import time
+import sys, termios, fcntl, os
+
+# Define some colours for terminals etc
+#
+class PiIO_col:
+	BOLD = '\033[1m'
+	UNDERLINE = '\033[4m'
+	#
+	RED = '\033[31m'
+	GREEN = '\033[32m'
+	BLUE = '\033[34m'
+	WHITE = '\033[37m'
+	#
+	REDB = '\033[41m'
+	GREENB = '\033[42m'
+	BLUEB = '\033[44m'
+	WHITEB = '\033[47m'
+	#
+	ENDC= '\033[0m'
+	#
+	HOME = '\033[0;0H'
+	CLR = '\033[2J'
+	RESET = '\033[0;0H\033[2J'
 
 
+def PiIO_getc():
+	fd = sys.stdin.fileno()
+	oldterm = termios.tcgetattr(fd)
+	newattr = termios.tcgetattr(fd)
+	newattr[3] = newattr[3] & ~termios.ICANON & ~termios.ECHO
+	termios.tcsetattr(fd, termios.TCSANOW, newattr)
+
+	oldflags = fcntl.fcntl(fd, fcntl.F_GETFL)
+	fcntl.fcntl(fd, fcntl.F_SETFL, oldflags | os.O_NONBLOCK)
+
+	c = None
+
+	try:
+		c = sys.stdin.read(1)
+	except IOError: pass
+
+	termios.tcsetattr(fd, termios.TCSAFLUSH, oldterm)
+	fcntl.fcntl(fd, fcntl.F_SETFL, oldflags)
+
+	return c
+
+# Basic time function run every n secs without sleep()
+#
+class PiIO_RunEvery:
+	tgt_time=0
+	time_span=0
+
+	def __init__(self,time_span):
+		self.time_span = time_span
+
+	def run(self):
+		if(time.time() > tgt_time):
+			self.tgt_time = time.time() + self.time_span
+			return True
+		else:
+			return False
+
+	def set_time_mins(self,time_span):
+		self.time_span = time_span * 60
+
+	def set_time_hrs(self,time_span):
+		self.time_span = time_span * 60 * 60
+
+	def set_time_secs(self,time_span):
+		self.time_span = time_span
+
+	def set_time_msecs(self,time_span):
+		self.time_span = time_span / 1000.0
+ 
+
+
+# Moving average function
+#
 class PiIO_EMA:
 	alpha=0
 	average=0
@@ -46,7 +121,7 @@ class PiIO_Alarm:
 
 		if(proc < self.amin):
 			self.alarm_st=True
-	
+
 		return self.alarm_st
 
 	def ack(self):
@@ -59,19 +134,18 @@ class PiIO_Scale:
 	rmax=0
 	smin=0
 	smax=0
-	
+
 	def __init__(self,rmin,rmax,smin,smax):
 		self.rmin=rmin
 		self.rmax=rmax
 		self.smin=smin
 		self.smax=smax
-		
+
 	def scale(self,raw):
 		m = (self.smax-self.smin) / (self.rmax-self.rmin)
 		c = self.smax - (m * self.rmax) 
 		return raw * m + c
-		
-		
+
 # Rising edge detector
 #
 class PiIO_Redge:
@@ -147,6 +221,9 @@ class PiIO_TON:
 		self.last_state = state
 		self.time_delay = time
 
+	def set_time(self,time):
+		self.time_delay = time
+
 	def ton(self,state):
 		tc = time.time()
 
@@ -175,6 +252,9 @@ class PiIO_TOF:
 
 	def __init__(self,state,time):
 		self.last_state = state
+		self.time_delay = time
+
+	def set_time(self,time):
 		self.time_delay = time
 
 	def tof(self,state):

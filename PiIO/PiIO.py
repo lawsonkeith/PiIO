@@ -9,7 +9,7 @@
 #
 from PiIO.PiIO_ADS1x15 import ADS1015
 import PiIO.PiIO_max31865
-import time
+import time,datetime
 import sys, termios, fcntl, os
 
 # Define some colours for terminals etc
@@ -55,6 +55,28 @@ def PiIO_getc():
 	fcntl.fcntl(fd, fcntl.F_SETFL, oldflags)
 
 	return c
+
+
+# Function to do a days hrs mins secs timer, returns time as a string
+#
+class PiIO_timer:
+	start_time = 0
+
+	def __init__(self):
+		self.start_time = time.time() 
+
+	def reset(self):
+		self.start_time = time.time()
+
+	def read(self):
+		diff = time.time() - self.start_time
+
+		m, s = divmod(int(diff), 60)
+		h, m = divmod(m, 60)
+		d, h = divmod(h, 24)
+
+		str =  '{:d} days {:d}:{:02d}:{:02d}'.format(d, h, m, s)
+		return str
 
 # Basic time function run every n secs without sleep()
 #

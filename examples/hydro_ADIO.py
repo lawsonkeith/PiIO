@@ -42,6 +42,7 @@ from PiIO import PiIO_Analog
 from PiIO import PiIO_col
 from PiIO import PiIO_getc
 from PiIO import PiIO_timer
+from PiIO import PiIO_EMA
 from pyowm import OWM
 import paho.mqtt.client as mqtt #import the client1
 
@@ -82,6 +83,8 @@ OE = LED(adc.OE)
 hours_no_water = 0
 irrigation_cnt = 0
 irrigation_timer = PiIO_timer()
+irrigation_auto = False
+irrigation_manual = False
 
 fountain_cnt = 0
 fountain_mins = 0
@@ -112,29 +115,37 @@ def timed_task1():
 	# sett locale to my garden
 	obs = owm.weather_at_coords(54.92,-1.74)      
 	while NoFault:	
-		# check weather forecast, see if there's any rain
-		print("T1> Checking weather")
-		w = obs.get_weather()
-		rain_str = w.get_detailed_status()
-		print('T1>',rain_str)
-		if 'rain' in rain_str:
-			print('T1> reset counter')
-			hours_no_water = 0
+		if irrigation_auto :
+			# check weather forecast, see if there's any rain
+			print("T1> Checking weather")
+			w = obs.get_weather()
+			rain_str = w.get_detailed_status()
+			print('T1>',rain_str)
+			if 'rain' in rain_str:
+				print('T1> reset counter')
+				hours_no_water = 0
+			else:
+				print('T1> increment counter')
+				hours_no_water += 1
+			# run irrigation if required
+			if(hours_no_water >= 60):
+				print('T1> Turn on irrigation');
+				#turn on solenoid
+				O2.on();
+				irrigation_timer.reset()
+				irrigation_cnt+=1
+				sleepMin(3)
+				#solenoid off
+				O2.off();
+				hours_no_water = 0
+			# wait an hour
 		else:
-			print('T1> increment counter')
-			hours_no_water += 1
-		# run irrigation if required
-		if(hours_no_water >= 60):
-			print('T1> Turn on irrigation');
-			#turn on solenoid
-			O2.on();
-			irrigation_timer.reset()
-			irrigation_cnt+=1
-			sleepMin(3)
-			#solenoid off
-			O2.off();
-			hours_no_water = 0
-		# wait an hour
+			# not enables
+			if irrigation_manual:
+				O2.on()
+			else:
+				O2.off()
+
 		sleepMin(60)
 
 
@@ -145,11 +156,12 @@ def timed_task2():
 	global beer_temp, beer_setp, beer_enable, beer_heating, NoFault
 	#
 	deadband = .5;
+	avg = PiIO_EMA(0.5)
 	while NoFault:
 		sleepMin(.5)
 		# brewing is enabled via the UI
 		if beer_enable == True:
-			beer_temp = adc.get_temp()
+			beer_temp = avg.ema( adc.get_temp() )
 			if beer_temp < (beer_setp - deadband):
 				beer_heating = True
 			if beer_temp > (beer_setp + deadband):
@@ -158,6 +170,7 @@ def timed_task2():
 			beer_heating = False
 
 		O1.value = beer_heating
+		client.publish("hydro/beer_temp",str(beer_temp))
 
 
 # @@@@ Debugger  terminal @@@@
@@ -165,10 +178,11 @@ def timed_task2():
 def timed_task3():
 	global hours_no_water, fountain_cnt, irrigation_cnt, run_timer, irrigation_timer
 	global beer_setp, beer_temp, beer_heating, beer_enable, beer_timer, NoFault
+	# example console UI debugger
 
 	sleep(4)
 	while NoFault:
-		sleep(1)
+		sleep(10)
 		if beer_enable:
 			beer_time = beer_timer.read()
 		else:
@@ -197,7 +211,6 @@ def timed_task3():
 		print( PiIO_col.REDB,'                                                                               ',PiIO_col.ENDC,sep='')
 
 		# publish mqt data back to node red UI
-		client.publish("hydro/beer_temp",str(beer_temp))
 		client.publish("hydro/beer_heating",str(beer_heating))
 		client.publish("hydro/beer_time",beer_time)
 
@@ -209,6 +222,7 @@ def timed_task3():
 # @@@@ KEYBOARD INPUT @@@@
 #
 def timed_task4():
+	# instead of node-red you are free to use a console UI 
 	global beer_setp, irrigation_cnt, fountain_cnt 
 
 	while NoFault:
@@ -226,12 +240,18 @@ def timed_task4():
 # @@@@@ mqt message handler @@@@@
 #
 def on_mqt_message(client, userdata, message):
-	global beer_setp, beer_enable, beer_timer
+	global beer_setp, beer_enable, beer_timer, irrigation_manual, irrigation_auto
 
 	if 'beer_enable' in message.topic:	
 		beer_enable = (message.payload.decode('utf-8').lower() == 'true')
 		if beer_enable :
 			beer_timer.reset()
+
+	if 'irrigation_auto' in message.topic:	
+		irrigation_auto = (message.payload.decode('utf-8').lower() == 'true')
+
+	if 'irrigation_manual' in message.topic:	
+		irrigation_manual = (message.payload.decode('utf-8').lower() == 'true')
 
 	if 'beer_setp' in message.topic:
 		beer_setp = float( message.payload.decode('utf-8') )

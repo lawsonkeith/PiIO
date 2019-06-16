@@ -164,8 +164,10 @@ def timed_task2():
 			beer_heating = False
 			beer_temp = 0
 		O1.value = beer_heating
+		# plot data
 		temp = '{0:.2f}'.format(beer_temp)
 		client.publish("hydro/beer_temp",str(temp)) # format 2dp
+		client.publish("hydro/beer_heating",str(beer_heating))
 
 
 # @@@@ Debugger  terminal @@@@
@@ -206,7 +208,6 @@ def timed_task3():
 		print( PiIO_col.REDB,'                                                                               ',PiIO_col.ENDC,sep='')
 
 		# publish mqt data back to node red UI
-		client.publish("hydro/beer_heating",str(beer_heating))
 		client.publish("hydro/beer_time",beer_time)
 
 		client.publish("hydro/irrigation_cnt",irrigation_cnt)

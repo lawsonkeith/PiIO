@@ -1,1 +1,2 @@
-[{"id":"60bf4303.25ad8c","type":"ui_numeric","z":"cad785e7.7ca968","tab":"78428f07.e9148","name":"Setpoint","topic":"hydro/beer_setp","group":"Brewing control","order":"2","format":"{{value}}","min":"15","max":"20","x":100,"y":80,"wires":[["4c68f5aa.da329c","c22a6585.d289a8"]]},{"id":"78428f07.e9148","type":"ui_tab","z":"","name":"Home","icon":"dashboard","order":"1"}]
+[{"id":"f5f73b95.7adea8","type":"ui_chart","z":"cad785e7.7ca968","tab":"78428f07.e9148","name":"Heater","group":"Brewing Feedback","order":"7","interpolate":"step-after","nodata":"No Data","removeOlder":"12","removeOlderUnit":"3600","x":670,"y":380,"wires":[[],[]]},{"id":"78428f07.e9148","type":"ui_tab","z":"","name":"Home","icon":"dashboard","order":"1"}]
+

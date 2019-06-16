@@ -1,2 +1,1 @@
-[{"id":"88c07628.646e78","type":"ui_switch","z":"cad785e7.7ca968","tab":"78428f07.e9148","name":"Auto","topic":"hydro/irrigation_auto","group":"Irrigation ","order":1,"onvalue":"true","offvalue":"false","x":310,"y":340,"wires":[["9c5f6b53.0bc9f8"]]},{"id":"78428f07.e9148","type":"ui_tab","z":"","name":"Home","icon":"dashboard","order":"1"}]
-
+[{"id":"60bf4303.25ad8c","type":"ui_numeric","z":"cad785e7.7ca968","tab":"78428f07.e9148","name":"Setpoint","topic":"hydro/beer_setp","group":"Brewing control","order":"2","format":"{{value}}","min":"15","max":"20","x":100,"y":80,"wires":[["4c68f5aa.da329c","c22a6585.d289a8"]]},{"id":"78428f07.e9148","type":"ui_tab","z":"","name":"Home","icon":"dashboard","order":"1"}]

@@ -89,7 +89,7 @@ irrigation_manual = False
 fountain_cnt = 0
 fountain_mins = 0
 
-beer_setp = 18
+beer_setp = 15
 beer_temp = 0
 beer_enable = False
 beer_heating = False
@@ -108,7 +108,7 @@ def sleepMin(time):
 # @@@@ WEATHER and IRRIGATION TASK @@@@
 #
 def timed_task1():
-	global hours_no_water, irrigation_cnt, irrigation_timer, NoFault
+	global hours_no_water, irrigation_cnt, irrigation_timer, NoFault, irrigation_manual
 	# use pyowm to get weather where I am
 	API_key = 'a3f08180a153e131e0e13d9d30a7c315'
 	owm = OWM(API_key)
@@ -139,14 +139,8 @@ def timed_task1():
 				O2.off();
 				hours_no_water = 0
 			# wait an hour
-		else:
-			# not enables
-			if irrigation_manual:
-				O2.on()
-			else:
-				O2.off()
+			sleepMin(60) 
 
-		sleepMin(60)
 
 
 
@@ -168,9 +162,10 @@ def timed_task2():
 				beer_heating = False
 		else:
 			beer_heating = False
-
+			beer_temp = 0
 		O1.value = beer_heating
-		client.publish("hydro/beer_temp",str(beer_temp))
+		temp = '{0:.2f}'.format(beer_temp)
+		client.publish("hydro/beer_temp",str(temp)) # format 2dp
 
 
 # @@@@ Debugger  terminal @@@@
@@ -182,7 +177,7 @@ def timed_task3():
 
 	sleep(4)
 	while NoFault:
-		sleep(10)
+		sleep(1)
 		if beer_enable:
 			beer_time = beer_timer.read()
 		else:
@@ -252,6 +247,11 @@ def on_mqt_message(client, userdata, message):
 
 	if 'irrigation_manual' in message.topic:	
 		irrigation_manual = (message.payload.decode('utf-8').lower() == 'true')
+		# not enables
+		if irrigation_manual:
+			O2.on()
+		else:
+			O2.off()
 
 	if 'beer_setp' in message.topic:
 		beer_setp = float( message.payload.decode('utf-8') )

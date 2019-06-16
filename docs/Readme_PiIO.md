@@ -1,127 +1,67 @@
-## PiIO python library
+## PiIO user library
 
-![](https://github.com/lawsonkeith/PiIO/raw/master/images/PhiSide.PNG)
+The PiIO user library is a library containing functions to:
 
-An IO library for the PiIO boards which demonstrate
+* Control specific boards
+* Provide generic control functions 
 
-* GPIO IO ancluding SPI and I2C peripheral access
-* A basic PLC style library containing basic control functions
-* A framework for concurrency
-* Example node red interface using pub sub topics
+### Board specific API
 
-There are examples for the three PiIO PCBs:
-
-[DO24 PCB](./Docs/Readme_DO24.md)
-[DIO12 PCB](./Docs/Readme_DIO12.md)
-[ADIO PCB](./Docs/Readme_ADIO.md)
-
-As well as a description of the four frameworks:
-
-[PiIO Library](./Docs/Readme_PiIO.md)
-[Concurrency](./Docs/Readme_Concurrency.md)
-[Node red](./Docs/Readme_NodeRed.md)
+| Class | Applies to | Description |
+| --- | --- | --- |
+| PiIO_Analog | PiIO ADIO PCB | Class for controlling PCB |
+| PiIO_DIO12_Mapper | PiIO DIO12 PCB | Class for controlling PCB |
+| PiIO_DO24_Mapper | PiIO DO24 PCB | Class for controlling that PCB |
 
 
-# PCB description
-The PCB has the following functionality:
+### Generic API
 
-* 24 x 5-24V High side outputs
-* One user controlled user LED for diagnostics
-* One LED to indicate field supply present
-* Overload fault LED
-* 24 x 3.5mm terminal blocks for high side outputs
-* 350mA max output per channel with overcurrent protection (High side)
-* 1 x Field supply to power high side drivers
-* 1 x 5V terminal block for Pi 5V optional power
-* 1 x Output enable to enable / disable all outputs, this also resets faults
-
-The device uses Darlington transistors with a saturation voltage of 1.6-1.8V, therefore the output voltage of will be VField - Vsat.
-In some applications this will cause problems with driving  relay coils:
-
-VField | Rated VCoil | VCoil | Note
-------- | ------ | ------- | -----
-5 | 5 | 3.2 | Will not work
-5 | 3V3 | 3.2 | Ok
-12 | 12 | 10.2 | Ok
-24 | 24 | 22.2 | Ok
+| Class | Description |
+| --- | --- |
+| PiIO_Col | Class providing definitions to control terminal colours |
+| PiIO_getc | Function to provide non blocking terminal char capture |
+| PiIO_timer | Funciton to provide basic timer to time actions (ascii) |
+| PiIO_RunEvery | Enables timed periodic calls |
+| PiIO_EMA | Provides exponential moving average |
+| PiIO_Alarm | Provides basic min max alarm on a variable |
+| PiIO_Scale | Provides basic scaling on a variable |
+| PiIO_Redge | Provides rising edge detection |
+| PiIO_Fedge | Provides falling edge detection |
+| PiIO_TON | Provides timed on function |
+| PiIO_TOF | Provides timed off function |
+| PiIO_TP | Provides timed pulse function |
 
 
-* The LED is designed to be cycled by the user program to show that is is running.
-* VField can range from 5-24V
+### Usage
 
-# PCB Pinout
+The program [basic_functs.py] provides examples of the generic functions and the board specific examples provide examples of the others.  
+The file [PiIO.py] provides an in depth description of the function calls.  
+The API can be accessed as follows:
 
-Output | RPI GPIO number
----- | ----
-O1 | 17
-O2 | 15
-O3 | 14
-O4 | 4
-O5 | 3
-O6 | 2
-O7 | 18
-O8 | 27
-O9 | 24
-O10 | 10
-O11 | 9
-O12 | 25
-O13 | 11
-O14 | 8
-O15 | 7
-O16 | 5
-O17 | 6
-O18 | 12
-O19 | 13
-O20 | 19
-O21 | 16
-O22 | 26
-O23 | 20
-O24 | 21
-RUN | 22
-OE | 23
+'''python
+from PiIO import PiIO_DO24_Mapper
+from PiIO import PiIO_Analog
+from PiIO import PiIO_col
+from PiIO import PiIO_getc
+from PiIO import PiIO_timer
+from PiIO import PiIO_EMA
+'''
+
+### Modifying the library
+
+The API can be updated using the upd script, this copies the local version to the global library location and is useful if you want to modify any of the functions.
+
+'''
+$ upd
+
+'''
 
 
-# Fault protection
+### Installation
 
-* Each ouput can hold 350mA and trip just above 500mA.  Between these values behavious is undefined.
-* When an output trips on overcurrent it remains off untill the Enable pin is cycled, only the pins on the devices that have overloaded will remain off.
-* The Fault LED indicates that a overcurrent or thermal shutdown has occured on one of the 8 drive ICs
-* For a thermal shutdown the entire device is shut down and all outputs are de-energised.
-* Thermally each IC can drive .8A in total over all 8 outputs at 24V DC @ 24 DegC.  
-* The board can therefore  drive up to 2.4A in total if spread correctly across the 3 driver ICs.
+First time library installation can be achieved using hte setup script.
 
 
-# Software description
-
-A python example is provided to test PCB functionality.  This includes a class to handle the GPIO to output pin mapping.
-The example uses the GPIOZero library.
-
-
-#Tools
-
-_Concurrency_
-* pip3 python package manager [sudo apt-get install python-pip]
-* Python twisted for concurrency [sudo apt-get install python-twisted]
- [TODO] 
- some work here to get correct python packages to install...
- sudo apt install python3-pip
- sudo python3.5 -m pip install twisted
- pip3 install service_identity
-
-
-_GPIO_
-* GPIOZero for pi [sudo apt install python3-gpiozero]
-
-_General_
-* gedit text editor  [sudo apt-get install gedit]
-
-_Node red_
-* [sudo apt-get install node-red]
-
-sudo apt-get install -y i2c-tools
-i2cdetect -y 1
-pip3 install gpiozero
-pip3 install smbus
-http://www.python-exemplary.com/index_en.php?inhalt_links=navigation_en.inc.php&inhalt_mitte=raspi/en/adc.inc.php
-
-sudo apt-get -y install python3-rpi.gpio
+'''
+$ sudo python3 setup.py install
+'''

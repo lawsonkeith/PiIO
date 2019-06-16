@@ -13,17 +13,17 @@ An Python3 IO library for the Paspberry Pi PiIO boards which demonstrates:
 
 There are examples for the three PiIO PCBs:
 
-* [DO24 PCB](./Docs/Readme_DO24.md)
-* [DIO12 PCB](./Docs/Readme_DIO12.md)
-* [ADIO PCB](./Docs/Readme_ADIO.md)
+* [DO24 PCB](./docs/Readme_DO24.md)
+* [DIO12 PCB](./docs/Readme_DIO12.md)
+* [ADIO PCB](./docs/Readme_ADIO.md)
 
 
 As well as a description of the four main software topics:
 
-* [System admin](./Docs/Readme_Admin.md)
-* [PiIO Library](./Docs/Readme_PiIO.md)
-* [Concurrency](./Docs/Readme_Concurrency.md)
-* [Node red](./Docs/Readme_NodeRed.md)
+* [System admin](./docs/Readme_Admin.md)
+* [PiIO Library](./docs/Readme_PiIO.md)
+* [Concurrency](./docs/Readme_Concurrency.md)
+* [Node red](./docs/Readme_NodeRed.md)
 
 
 Example | Description

@@ -24,14 +24,15 @@ __linux packages__
 
 | Item | Notes |
 | ---- | ----- |
-| mosquitto | mqt broker |
-| pyhton 3 | Varsion 3.5+ |
+| mosquitto | mqtt broker |
+| python3.5 | Varsion 3.5+ |
 | python-pip3 | package installer for python |
 | git | revision control package |
 | node red | user interface and / or control via mqtt |
  
-All packages can be installed using apt-get e.g. [sudo apt-get install pythin-pip3]
-
+All packages can be installed using apt-get e.g. [sudo apt-get install python-pip3]  
+Use [python3 --version] to find out what version you are running.
+ 
  
 ### Auto boot programs
 
@@ -49,7 +50,7 @@ Use [sudo raspi-config] to perform the following basic tasks.
 * __Enable i2c__ required for ADIO board
 * __Enable wifi__ required if LAN cable not used
 
-Further notes on how to do this can e found here:
+Further notes on how to do this can be found here:  
 [https://www.raspberrypi.org/documentation/configuration/raspi-config.md]
 
 
@@ -61,8 +62,7 @@ A terminal debugger is provided in some of the examples to help.
 
 ### Local management
 
-If possible it's easer to hook a monitor and keyboard up to the pi and edit the files locally.
-The range of editors will be much better if you use the destop version of stretch.
-If you can using a LAN cable is more reliable than wifi also.
-
-If you do this you can substitute __nano__ out for __geany__, __gedit__ or __thonny__ (the best)
+If possible it's easer to hook a monitor and keyboard up to the pi and edit the files locally.  
+The range of editors will be much better if you use the destop version of stretch.  
+If you can using a LAN cable is more reliable than wifi also.  
+If you do this you can substitute __nano__ out for __geany__, __gedit__ or __thonny__ (the best)  

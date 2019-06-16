@@ -38,23 +38,23 @@ The program [basic_functs.py] provides examples of the generic functions and the
 The file [PiIO.py] provides an in depth description of the function calls.  
 The API can be accessed as follows:
 
-'''python
+```python
 from PiIO import PiIO_DO24_Mapper
 from PiIO import PiIO_Analog
 from PiIO import PiIO_col
 from PiIO import PiIO_getc
 from PiIO import PiIO_timer
 from PiIO import PiIO_EMA
-'''
+```
 
 ### Modifying the library
 
 The API can be updated using the upd script, this copies the local version to the global library location and is useful if you want to modify any of the functions.
 
-'''
+```
 $ upd
 
-'''
+```
 
 
 ### Installation
@@ -62,6 +62,6 @@ $ upd
 First time library installation can be achieved using hte setup script.
 
 
-'''
+```
 $ sudo python3 setup.py install
-'''
+```

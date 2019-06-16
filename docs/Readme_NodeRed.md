@@ -16,10 +16,10 @@ User interfaces done in my examples were done using __node-red-contrib-ui__.
 This provides additional nodes to provide all the user interface components.  
 This can be installed as follows:  
 
-'''
+```
 cd ~\.node-red
 npm install node-red-contrib-ui
-'''
+```
 
 ### Using
 

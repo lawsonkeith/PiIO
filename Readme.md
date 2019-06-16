@@ -20,10 +20,10 @@ There are examples for the three PiIO PCBs:
 
 As well as a description of the four main software topics:
 
-* [System admin](./docs/Readme_Admin.md)
-* [PiIO Library](./docs/Readme_PiIO.md)
-* [Concurrency](./docs/Readme_Concurrency.md)
-* [Node red](./docs/Readme_NodeRed.md)
+* [System admin](docs/Readme_Admin.md)
+* [PiIO Library](docs/Readme_PiIO.md)
+* [Concurrency](docs/Readme_Concurrency.md)
+* [Node red](docs/Readme_NodeRed.md)
 
 
 Example | Description

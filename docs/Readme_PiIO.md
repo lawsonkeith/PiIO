@@ -11,7 +11,7 @@ The PiIO user library is a library containing functions to:
 | --- | --- | --- |
 | PiIO_Analog | PiIO ADIO PCB | Class for controlling PCB |
 | PiIO_DIO12_Mapper | PiIO DIO12 PCB | Class for controlling PCB |
-| PiIO_DO24_Mapper | PiIO DO24 PCB | Class for controlling that PCB |
+| PiIO_DO24_Mapper | PiIO DO24 PCB | Class for controlling PCB |
 
 
 ### Generic API
@@ -36,7 +36,7 @@ The PiIO user library is a library containing functions to:
 
 The program [basic_functs.py] provides examples of the generic functions and the board specific examples provide examples of the others.  
 The file [PiIO.py] provides an in depth description of the function calls.  
-The API can be accessed as follows:
+The API can be accessed from within python as follows:
 
 ```python
 from PiIO import PiIO_DO24_Mapper
@@ -59,7 +59,7 @@ $ upd
 
 ### Installation
 
-First time library installation can be achieved using hte setup script.
+First time library installation can be achieved using the setup script.  Alternatively use the above method which is functionally identical.
 
 
 ```

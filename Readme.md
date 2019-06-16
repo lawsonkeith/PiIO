@@ -1,4 +1,4 @@
-## PiIO python library
+## PiIO python repository
 
 ![](https://github.com/lawsonkeith/PiIO/raw/master/images/PhiSide.PNG)
 
@@ -35,5 +35,4 @@ nodered_DIO.py | as above but with node red UI interface
 basic_ADIO.py | Basic usage of analog PCB
 PiIO.py | Low level library holding PCB abstractions and utility functions
 basic_functs.py | examples for PiIO utility funciotns such as timer functs
-sudo pip3 install Adafruit-ADS1x15
-sudo python3 setup.py install
+hydro_ADIO | Advanced exmple of a hamebrew controller and irrigation system

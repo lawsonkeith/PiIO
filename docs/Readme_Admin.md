@@ -5,6 +5,12 @@
 All examples were witten using rasbian stretch lite.
 
 
+### Installation
+
+Installation instructions can be found here:  
+https://www.raspberrypi.org/documentation/installation/installing-images/
+
+
 ### Dependencies
 
 __Python packages__ 
@@ -30,8 +36,8 @@ __linux packages__
 | git | revision control package |
 | node red | user interface and / or control via mqtt |
  
-All packages can be installed using apt-get e.g. [sudo apt-get install python-pip3]  
-Use [python3 --version] to find out what version you are running.
+* All packages can be installed using apt-get e.g. [sudo apt-get install python-pip3]  
+* Use [python3 --version] to find out what version you are running.
  
  
 ### Auto boot programs
@@ -62,7 +68,6 @@ A terminal debugger is provided in some of the examples to help.
 
 ### Local management
 
-If possible it's easer to hook a monitor and keyboard up to the pi and edit the files locally.  
-The range of editors will be much better if you use the destop version of stretch.  
-If you can using a LAN cable is more reliable than wifi also.  
+If possible it's easer to hook a monitor and keyboard up to the pi and edit the files locally as the range of editors will be much better if you use the destop version of stretch.  
+If you can using a LAN cable is more reliable than wifi also, you'll find wifi has limited range and generally suffers interference problems from devices such as cordless telephones.
 If you do this you can substitute __nano__ out for __geany__, __gedit__ or __thonny__ (the best)  

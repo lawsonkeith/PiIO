@@ -97,10 +97,18 @@ Using GPIO it's a good idea to flash the RUN led so we know there's a program ru
 run.blink(.100,.900)
 ```
 
-Next we can use the class methods to control the rest of the board.
+Next we can use a combination of the PiIO and GPIO Zero class methods to control the rest of the board. 
 
 
 ```python
+print("> reading ADC 1..4")
+data = .4
+for x in range(4):
+	data = adc.get_scaled(x) 	
+	print (" ",x," scaled ","{:.2f}".format(data),sep='\t',end='')
+	data = adc.get_raw(x) 	
+	print ("         raw    ",data,sep='\t')
+
 print("> Do rate increase AO1")
 for x in range(100):
 	PWM1.value = x / 100.0

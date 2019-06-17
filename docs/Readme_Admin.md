@@ -10,6 +10,7 @@ All examples were witten using rasbian stretch lite.
 Installation instructions can be found here:  
 https://www.raspberrypi.org/documentation/installation/installing-images/
 
+![](https://github.com/lawsonkeith/PiIO/raw/master/images/framework.PNG)
 
 ### Dependencies
 

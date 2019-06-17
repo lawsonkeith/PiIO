@@ -5,6 +5,8 @@ The PiIO user library is a library containing functions to:
 * Control specific boards
 * Provide generic control functions 
 
+![](https://github.com/lawsonkeith/PiIO/raw/master/images/framework.PNG)
+
 ### Board specific API
 
 | Class | Applies to | Description |

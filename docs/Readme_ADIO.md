@@ -2,7 +2,7 @@
 
 _TODO:_ update
 
-![](https://github.com/lawsonkeith/PiIO/raw/master/images/PhiSide.PNG)
+![](https://github.com/lawsonkeith/PiIO/raw/master/images/enclosure1.PNG)
 
 An IO library for the PiIO boards which demonstrate
 

@@ -38,6 +38,8 @@ https://docs.python.org/3/library/concurrent.futures.html#module-concurrent.futu
 With this approach we can have python processes that run concurrently within the same program as separate execution threads.    
 Going back to the original example the code would then look like:  
 
+![](https://github.com/lawsonkeith/PiIO/raw/master/images/thread_pic.PNG)
+
 ```python
 def Thread1:
 	while True:

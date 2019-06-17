@@ -13,9 +13,11 @@ if ((count % 100) == 0):
 	ToggleLED(2)
 ```
 
-This can get quite complex once we start doing more complex tasks and once we start using more complex APIs that may block for several seconds on some calls it becomes unmanageable.  For example:
+This can get quite hard to manage once we start doing more complex tasks and once we start using 3rd party APIs that may block for several seconds on some calls it becomes unmanageable.  For example:
 
 ```python
+# Program to flash LED as rate specified by user, user can re-request new rate as many times as he likes
+#
 while True:
 	#get user input
 	freq = input()
@@ -35,7 +37,22 @@ In the examples we use method (2) using the concurrent futures python framework 
 
 https://docs.python.org/3/library/concurrent.futures.html#module-concurrent.futures
 
-With this approach we can have python processes that run concurrently within the same program as separate execution threads.    
+For more complex tasks it's often worth creating your own messaging framework (3) and running independent processes, linux will handle the process concurrency for you, all you need to do really is provide a means for the tasks to communicate which could be via a mqtt broker or request reply pattern provided by a framework such as zeromq.
+
+```
+#!\bin\sh
+#
+# shell script to launch concurrent tasks
+echo launching tasks...
+sleep 1
+./task1 &
+sleep 1
+./task2 &
+sleep 1
+echo done!
+```
+
+With the thread based approach we have python functions that run concurrently within the same program as separate execution threads.    
 Going back to the original example the code would then look like:  
 
 ![](https://github.com/lawsonkeith/PiIO/raw/master/images/thread_pic.PNG)

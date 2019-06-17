@@ -16,7 +16,7 @@ https://nodered.org/docs/getting-started/installation
 
 ### Dependencies
 
-User interfaces done in my examples were done using __node-red-contrib-ui__.  
+User interfaces done in the examples were done using __node-red-contrib-ui__.  
 This provides additional nodes to provide all the user interface components.  
 This can be installed as follows:  
 

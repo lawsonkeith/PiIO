@@ -1,41 +1,23 @@
 ## ADIO PCB
 
-_TODO:_ update
-
 ![](https://github.com/lawsonkeith/PiIO/raw/master/images/enclosure1.PNG)
 
-An IO library for the PiIO boards which demonstrate
-
-* GPIO IO ancluding SPI and I2C peripheral access
-* A basic PLC style library containing basic control functions
-* A framework for concurrency
-* Example node red interface using pub sub topics
-
-There are examples for the three PiIO PCBs:
-
-[DO24 PCB](./Docs/Readme_DO24.md)
-[DIO12 PCB](./Docs/Readme_DIO12.md)
-[ADIO PCB](./Docs/Readme_ADIO.md)
-
-As well as a description of the four frameworks:
-
-[PiIO Library](./Docs/Readme_PiIO.md)
-[Concurrency](./Docs/Readme_Concurrency.md)
-[Node red](./Docs/Readme_NodeRed.md)
-
-
-# PCB description
+### PCB description
 The PCB has the following functionality:
 
-* 24 x 5-24V High side outputs
+* One Field input which also powers the RPi
+* 8 x 5-24V High side outputs
+* 4 x 0-24V digital inputs
+* 350mA max output per channel with overcurrent protection (High side)
+* 1 x Output enable to enable / disable all outputs, this also resets faults
 * One user controlled user LED for diagnostics
 * One LED to indicate field supply present
 * Overload fault LED
-* 24 x 3.5mm terminal blocks for high side outputs
-* 350mA max output per channel with overcurrent protection (High side)
-* 1 x Field supply to power high side drivers
-* 1 x 5V terminal block for Pi 5V optional power
-* 1 x Output enable to enable / disable all outputs, this also resets faults
+* One 3 wire PT100 interface
+* Two 0-10V analog outputs
+* Four 0-10V or 0-20mA inputs with programmable gain
+* Empty header for I2C interfacing
+* Jumper for optionally feeding overload status back to software and disabling the run LED
 
 The device uses Darlington transistors with a saturation voltage of 1.6-1.8V, therefore the output voltage of will be VField - Vsat.
 In some applications this will cause problems with driving  relay coils:
@@ -47,83 +29,130 @@ VField | Rated VCoil | VCoil | Note
 12 | 12 | 10.2 | Ok
 24 | 24 | 22.2 | Ok
 
-
 * The LED is designed to be cycled by the user program to show that is is running.
 * VField can range from 5-24V
-
-# PCB Pinout
-
-Output | RPI GPIO number
----- | ----
-O1 | 17
-O2 | 15
-O3 | 14
-O4 | 4
-O5 | 3
-O6 | 2
-O7 | 18
-O8 | 27
-O9 | 24
-O10 | 10
-O11 | 9
-O12 | 25
-O13 | 11
-O14 | 8
-O15 | 7
-O16 | 5
-O17 | 6
-O18 | 12
-O19 | 13
-O20 | 19
-O21 | 16
-O22 | 26
-O23 | 20
-O24 | 21
-RUN | 22
-OE | 23
-
-
-# Fault protection
-
-* Each ouput can hold 350mA and trip just above 500mA.  Between these values behavious is undefined.
-* When an output trips on overcurrent it remains off untill the Enable pin is cycled, only the pins on the devices that have overloaded will remain off.
-* The Fault LED indicates that a overcurrent or thermal shutdown has occured on one of the 8 drive ICs
-* For a thermal shutdown the entire device is shut down and all outputs are de-energised.
-* Thermally each IC can drive .8A in total over all 8 outputs at 24V DC @ 24 DegC.  
-* The board can therefore  drive up to 2.4A in total if spread correctly across the 3 driver ICs.
-
-
-# Software description
 
 A python example is provided to test PCB functionality.  This includes a class to handle the GPIO to output pin mapping.
 The example uses the GPIOZero library.
 
 
-#Tools
+### Software library
 
-_Concurrency_
-* pip3 python package manager [sudo apt-get install python-pip]
-* Python twisted for concurrency [sudo apt-get install python-twisted]
- [TODO] 
- some work here to get correct python packages to install...
- sudo apt install python3-pip
- sudo python3.5 -m pip install twisted
- pip3 install service_identity
+The PiIO library provides a means of communicating with the board using the RPI GPIO header.
+
+'''python
+# import library
+from PiIO import PiIO_Analog
+'''
+
+The board uses a 4 channes ADS1115 ADC, this had a programmable gain which needs to be set, the input stage of the PCB has a gain of 0.2 to a 10V signal produces roughly 2V at the ADC.
+
+'''python
+# Choose a gain of 1 for reading voltages from 0 to 4.09V.
+# Or pick a different gain to change the range of voltages that are read:
+#  - 2/3 = +/-6.144V
+#  -   1 = +/-4.096V
+#  -   2 = +/-2.048V
+#  -   4 = +/-1.024V
+#  -   8 = +/-0.512V
+#  -  16 = +/-0.256V
+# See table 3 in the ADS1015/ADS1115 datasheet for more info on gain.
+GAIN = 2
+'''
+
+Larger or smaller gains can be used if you plan to interface to larger or smaller signals.
+
+The IO is controlled using the GPIOZero library, the PiIO library provides wrapper classes to make this as easy as possible:
+
+'''python
+# @@@@ Hardware init @@@@
+#
+adc = PiIO_Analog(GAIN)
+run = LED(adc.RUN)
+PWM1 = PWMLED(adc.PWM1)
+PWM2 = PWMLED(adc.PWM2)
+IN1 = Button(adc.I1,pull_up=False)
+IN2 = Button(adc.I2,pull_up=False)
+IN3 = Button(adc.I3,pull_up=False)
+IN4 = Button(adc.I4,pull_up=False)
+O1 = LED(adc.O1)
+O2 = LED(adc.O2)
+O3 = LED(adc.O3)
+O4 = LED(adc.O4)
+O5 = LED(adc.O5)
+O6 = LED(adc.O6)
+O7 = LED(adc.O7)
+O8 = LED(adc.O8)
+OE = LED(adc.OE)
+'''
+
+Using GPIO it's a good idea to flash the RUN led so we know there's a program running.
+
+'''python
+# @@@@ Example code here @@@@
+#
+# attach a LED to Output 6 on the board.
+# then PWM at 10Hz, cycle duty cycle then.
+#
+run.blink(.100,.900)
+'''
+
+Next we can use the class methods to control the rest of the board.
 
 
-_GPIO_
-* GPIOZero for pi [sudo apt install python3-gpiozero]
+'''python
+print("> Do rate increase AO1")
+for x in range(100):
+	PWM1.value = x / 100.0
+	sleep(.02)
+	print(".",end='',flush=True)
+print("")
 
-_General_
-* gedit text editor  [sudo apt-get install gedit]
+sleep(2)
+print("> Do rate increase AO2")
+for x in range(100):
+	PWM2.value = x / 100.0
+	sleep(.02)
+	print(".",end='',flush=True)
+print("")
 
-_Node red_
-* [sudo apt-get install node-red]
 
-sudo apt-get install -y i2c-tools
-i2cdetect -y 1
-pip3 install gpiozero
-pip3 install smbus
-http://www.python-exemplary.com/index_en.php?inhalt_links=navigation_en.inc.php&inhalt_mitte=raspi/en/adc.inc.php
+print("> Read temp")
+temp = adc.get_temp()
+print (" {:.2f}".format(temp)," DegC")
 
-sudo apt-get -y install python3-rpi.gpio
+print("> Read DI 1-4")
+for x in range(10):
+	print(" IN1: ",IN1.is_pressed," IN2: ",IN2.is_pressed," IN3 ",IN3.is_pressed," IN4 ",IN4.is_pressed)
+	sleep(1)
+
+print("> DO Output 1..8")
+OE.on()
+print(" ..1",end='',flush=True)	
+O1.on()
+sleep(2)
+print("..2",end='',flush=True)	
+O2.on()
+sleep(2)
+print("..3",end='',flush=True)	
+O3.on()
+sleep(2)
+print("..4",end='',flush=True)	
+O4.on()
+sleep(2)
+print("..5",end='',flush=True)	
+O5.on()
+sleep(2)
+print("..6",end='',flush=True)	
+O6.on()
+sleep(2)
+print("..7",end='',flush=True)	
+O7.on()
+sleep(2)
+print("..8",end='',flush=True)	
+O8.on()
+sleep(2)
+print("")
+print("> wait")
+sleep(10)
+'''

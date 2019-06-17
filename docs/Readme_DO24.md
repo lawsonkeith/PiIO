@@ -1,30 +1,8 @@
 ## DO24 PCB
 
-_TODO:_ update
-
 ![](https://github.com/lawsonkeith/PiIO/raw/master/images/PhiSide.PNG)
 
-An IO library for the PiIO boards which demonstrate
-
-* GPIO IO ancluding SPI and I2C peripheral access
-* A basic PLC style library containing basic control functions
-* A framework for concurrency
-* Example node red interface using pub sub topics
-
-There are examples for the three PiIO PCBs:
-
-[DO24 PCB](./Docs/Readme_DO24.md)
-[DIO12 PCB](./Docs/Readme_DIO12.md)
-[ADIO PCB](./Docs/Readme_ADIO.md)
-
-As well as a description of the four frameworks:
-
-[PiIO Library](./Docs/Readme_PiIO.md)
-[Concurrency](./Docs/Readme_Concurrency.md)
-[Node red](./Docs/Readme_NodeRed.md)
-
-
-# PCB description
+### PCB description
 The PCB has the following functionality:
 
 * 24 x 5-24V High side outputs
@@ -51,7 +29,7 @@ VField | Rated VCoil | VCoil | Note
 * The LED is designed to be cycled by the user program to show that is is running.
 * VField can range from 5-24V
 
-# PCB Pinout
+### PCB Pinout
 
 Output | RPI GPIO number
 ---- | ----
@@ -83,7 +61,7 @@ RUN | 22
 OE | 23
 
 
-# Fault protection
+### Fault protection
 
 * Each ouput can hold 350mA and trip just above 500mA.  Between these values behavious is undefined.
 * When an output trips on overcurrent it remains off untill the Enable pin is cycled, only the pins on the devices that have overloaded will remain off.
@@ -93,37 +71,117 @@ OE | 23
 * The board can therefore  drive up to 2.4A in total if spread correctly across the 3 driver ICs.
 
 
-# Software description
+### Software description
 
-A python example is provided to test PCB functionality.  This includes a class to handle the GPIO to output pin mapping.
-The example uses the GPIOZero library.
+The PiIO library provides mapping functions for this boards.
 
+'''python
+# import mapper
+from PiIO import PiIO_DO24_Mapper
 
-#Tools
+# @@@@ Hardware init @@@@
+#
+io = PiIO_DO24_Mapper()
+o1 = LED(io.O1); 
+o2 = LED(io.O2); 
+o3 = LED(io.O3); 
+o4 = LED(io.O4); 
+o5 = LED(io.O5); 
+#o6 = LED(O6) 
+o6 = PWMLED(io.O6,True,0,1000);
+o7 = LED(io.O7); 
+o8 = LED(io.O8); 
+o9 = LED(io.O9); 
+o10 = LED(io.O10); 
+o11 = LED(io.O11); 
+o12 = LED(io.O12); 
+o13 = LED(io.O13); 
+o14 = LED(io.O14); 
+o15 = LED(io.O15); 
+o16 = LED(io.O16); 
+o17 = LED(io.O17); 
+o18 = LED(io.O18); 
+o19 = LED(io.O19); 
+o20 = LED(io.O20); 
+o21 = LED(io.O21); 
+o22 = LED(io.O22); 
+o23 = LED(io.O23); 
+o24 = LED(io.O24); 
 
-_Concurrency_
-* pip3 python package manager [sudo apt-get install python-pip]
-* Python twisted for concurrency [sudo apt-get install python-twisted]
- [TODO] 
- some work here to get correct python packages to install...
- sudo apt install python3-pip
- sudo python3.5 -m pip install twisted
- pip3 install service_identity
+enable = LED(io.OE);
+run = LED(io.RUN);
+'''
 
+We can now control the outputs using the GPIO zero library, we can use them as digital outs or PWM outs.
 
-_GPIO_
-* GPIOZero for pi [sudo apt install python3-gpiozero]
+'''python
+	#  turn on all outputs in 5s steps...
+	#
+	print("turning all outputs on...")
+	o1.on()
+	sleep(5)
+	o2.on()
+	sleep(5)
+	o3.on()
+	sleep(5)
+	o4.on()
+	sleep(5)
+	o5.on()
+	sleep(5)
 
-_General_
-* gedit text editor  [sudo apt-get install gedit]
+	for b in range(100):
+		# flash LED
+		sleep(.1)
+		
+		# PWM to output
+		o6.value  = b / 100.0
+		print(b, "% duty")
 
-_Node red_
-* [sudo apt-get install node-red]
+	sleep(5)
+	o7.on()
+	sleep(5)
+	o8.on()
+	sleep(5)
+	o9.on()
+	sleep(5)
+	o10.on()
+	sleep(5)
+	o11.on()
+	sleep(5)
+	o12.on()
+	print("12 on...")
+	sleep(5)
+	o13.on()
+	sleep(5)
+	o14.on() 
+	sleep(5)
+	o15.on()
+	sleep(5)
+	o16.on()
+	sleep(5)
+	o17.on()
+	sleep(5)
+	o18.on()
+	sleep(5)
+	o19.on()
+	sleep(5)
+	o20.on()
+	sleep(5)
+	o21.on()
+	sleep(5)
+	o22.on()
+	sleep(5)
+	o23.on()
+	sleep(5)
+	o24.on()
+	sleep(5)
+	print("Done")
+	sleep(5)
 
-sudo apt-get install -y i2c-tools
-i2cdetect -y 1
-pip3 install gpiozero
-pip3 install smbus
-http://www.python-exemplary.com/index_en.php?inhalt_links=navigation_en.inc.php&inhalt_mitte=raspi/en/adc.inc.php
-
-sudo apt-get -y install python3-rpi.gpio
+	# Disable outputs
+	#
+	print("turning outputs off")
+	enable.off()
+	sleep(10)
+	print("exit...")
+'''

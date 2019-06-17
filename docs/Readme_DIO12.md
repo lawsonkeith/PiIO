@@ -1,33 +1,12 @@
 ## DIO12 PCB
 
-_TODO:_ update
-
 ![](https://github.com/lawsonkeith/PiIO/raw/master/images/PhiSide.PNG)
-
-An IO library for the PiIO boards which demonstrate
-
-* GPIO IO ancluding SPI and I2C peripheral access
-* A basic PLC style library containing basic control functions
-* A framework for concurrency
-* Example node red interface using pub sub topics
-
-There are examples for the three PiIO PCBs:
-
-[DO24 PCB](./Docs/Readme_DO24.md)
-[DIO12 PCB](./Docs/Readme_DIO12.md)
-[ADIO PCB](./Docs/Readme_ADIO.md)
-
-As well as a description of the four frameworks:
-
-[PiIO Library](./Docs/Readme_PiIO.md)
-[Concurrency](./Docs/Readme_Concurrency.md)
-[Node red](./Docs/Readme_NodeRed.md)
-
 
 # PCB description
 The PCB has the following functionality:
 
-* 24 x 5-24V High side outputs
+* 12 x 5-24V High side outputs
+* 12 x 3.3-24V Digital inputs
 * One user controlled user LED for diagnostics
 * One LED to indicate field supply present
 * Overload fault LED
@@ -51,37 +30,6 @@ VField | Rated VCoil | VCoil | Note
 * The LED is designed to be cycled by the user program to show that is is running.
 * VField can range from 5-24V
 
-# PCB Pinout
-
-Output | RPI GPIO number
----- | ----
-O1 | 17
-O2 | 15
-O3 | 14
-O4 | 4
-O5 | 3
-O6 | 2
-O7 | 18
-O8 | 27
-O9 | 24
-O10 | 10
-O11 | 9
-O12 | 25
-O13 | 11
-O14 | 8
-O15 | 7
-O16 | 5
-O17 | 6
-O18 | 12
-O19 | 13
-O20 | 19
-O21 | 16
-O22 | 26
-O23 | 20
-O24 | 21
-RUN | 22
-OE | 23
-
 
 # Fault protection
 
@@ -95,35 +43,89 @@ OE | 23
 
 # Software description
 
-A python example is provided to test PCB functionality.  This includes a class to handle the GPIO to output pin mapping.
-The example uses the GPIOZero library.
+The PiIO software library provides a means of interfaceing to the PCB.
+
+'''python
+# import PiIO library
+from PiIO import PiIO_DIO12_Mapper
+
+# @@@@ Hardware init @@@@
+#
+io = PiIO_DIO12_Mapper()
+o1 = LED(io.O1); 
+o2 = LED(io.O2); 
+o3 = LED(io.O3); 
+o4 = LED(io.O4); 
+o5 = LED(io.O5); 
+#o6 = LED(O6) 
+o6 = PWMLED(io.O6,True,0,1000);
+o7 = LED(io.O7); 
+o8 = LED(io.O8); 
+o9 = LED(io.O9); 
+o10 = LED(io.O10); 
+o11 = LED(io.O11);
+o12 = LED(io.O12);
+
+i1 = Button(io.I1,pull_up=False); 
+i2 = Button(io.I2,pull_up=False); 
+i3 = Button(io.I3,pull_up=False); 
+i4 = Button(io.I4,pull_up=False); 
+i5 = Button(io.I5,pull_up=False); 
+i6 = Button(io.I6,pull_up=False); 
+i7 = Button(io.I7,pull_up=False); 
+i8 = Button(io.I8,pull_up=False); 
+i9 = Button(io.I9,pull_up=False); 
+i10 = Button(io.I10,pull_up=False);
+i11 = Button(io.I11,pull_up=False); 
+i12 = Button(io.I12,pull_up=False); 
+'''
+
+The GPIO zero library can now be used to control the IO.
+
+''python
+enable = LED(io.OE);
+run = LED(io.RUN);
+#
+# @@@@ END HW INIT @@@@
+
+# Enable outputs
+#
+enable.on()
+
+#
+print ("Program to echo when input pins are pulled high")
+print ("use 3V3 to 24V")
+print ()
+while True:
+	if  i1.value == 1:
+		print("i1 pressed")
+	if i2.value == 1:
+		print("i2 pressed")
+	if i3.value == 1:
+		print("i3 pressed")
+	if i4.value == 1:
+		print("i4 pressed")
+	if i5.value == 1:
+		print("i5 pressed")
+	if i6.value == 1:
+		print("i6 pressed")
+	if i7.value == 1:
+		print("i7 pressed")
+	if i8.value == 1:
+		print("i8 pressed")
+	if i9.value == 1:
+		print("i9 pressed")
+	if i10.value == 1:
+		print("i10 pressed")
+	if i11.value == 1:
+		print("i11 pressed")
+	if i12.value == 1:
+		print("i12 pressed")
+
+	sleep(1)
+	run.toggle()
 
 
-#Tools
+'''
 
-_Concurrency_
-* pip3 python package manager [sudo apt-get install python-pip]
-* Python twisted for concurrency [sudo apt-get install python-twisted]
- [TODO] 
- some work here to get correct python packages to install...
- sudo apt install python3-pip
- sudo python3.5 -m pip install twisted
- pip3 install service_identity
-
-
-_GPIO_
-* GPIOZero for pi [sudo apt install python3-gpiozero]
-
-_General_
-* gedit text editor  [sudo apt-get install gedit]
-
-_Node red_
-* [sudo apt-get install node-red]
-
-sudo apt-get install -y i2c-tools
-i2cdetect -y 1
-pip3 install gpiozero
-pip3 install smbus
-http://www.python-exemplary.com/index_en.php?inhalt_links=navigation_en.inc.php&inhalt_mitte=raspi/en/adc.inc.php
-
-sudo apt-get -y install python3-rpi.gpio
+ 

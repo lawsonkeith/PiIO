@@ -45,7 +45,7 @@ VField | Rated VCoil | VCoil | Note
 
 The PiIO software library provides a means of interfaceing to the PCB.
 
-'''python
+```python
 # import PiIO library
 from PiIO import PiIO_DIO12_Mapper
 
@@ -78,11 +78,11 @@ i9 = Button(io.I9,pull_up=False);
 i10 = Button(io.I10,pull_up=False);
 i11 = Button(io.I11,pull_up=False); 
 i12 = Button(io.I12,pull_up=False); 
-'''
+```
 
 The GPIO zero library can now be used to control the IO.
 
-''python
+```python
 enable = LED(io.OE);
 run = LED(io.RUN);
 #
@@ -126,6 +126,6 @@ while True:
 	run.toggle()
 
 
-'''
+```
 
  

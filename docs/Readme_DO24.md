@@ -75,7 +75,7 @@ OE | 23
 
 The PiIO library provides mapping functions for this boards.
 
-'''python
+```python
 # import mapper
 from PiIO import PiIO_DO24_Mapper
 
@@ -110,11 +110,11 @@ o24 = LED(io.O24);
 
 enable = LED(io.OE);
 run = LED(io.RUN);
-'''
+```
 
 We can now control the outputs using the GPIO zero library, we can use them as digital outs or PWM outs.
 
-'''python
+```python
 	#  turn on all outputs in 5s steps...
 	#
 	print("turning all outputs on...")
@@ -184,4 +184,4 @@ We can now control the outputs using the GPIO zero library, we can use them as d
 	enable.off()
 	sleep(10)
 	print("exit...")
-'''
+```

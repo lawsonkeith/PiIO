@@ -40,14 +40,14 @@ The example uses the GPIOZero library.
 
 The PiIO library provides a means of communicating with the board using the RPI GPIO header.
 
-'''python
+```python
 # import library
 from PiIO import PiIO_Analog
-'''
+```
 
 The board uses a 4 channes ADS1115 ADC, this had a programmable gain which needs to be set, the input stage of the PCB has a gain of 0.2 to a 10V signal produces roughly 2V at the ADC.
 
-'''python
+```python
 # Choose a gain of 1 for reading voltages from 0 to 4.09V.
 # Or pick a different gain to change the range of voltages that are read:
 #  - 2/3 = +/-6.144V
@@ -58,13 +58,13 @@ The board uses a 4 channes ADS1115 ADC, this had a programmable gain which needs
 #  -  16 = +/-0.256V
 # See table 3 in the ADS1015/ADS1115 datasheet for more info on gain.
 GAIN = 2
-'''
+```
 
 Larger or smaller gains can be used if you plan to interface to larger or smaller signals.
 
 The IO is controlled using the GPIOZero library, the PiIO library provides wrapper classes to make this as easy as possible:
 
-'''python
+```python
 # @@@@ Hardware init @@@@
 #
 adc = PiIO_Analog(GAIN)
@@ -84,23 +84,23 @@ O6 = LED(adc.O6)
 O7 = LED(adc.O7)
 O8 = LED(adc.O8)
 OE = LED(adc.OE)
-'''
+```
 
 Using GPIO it's a good idea to flash the RUN led so we know there's a program running.
 
-'''python
+```python
 # @@@@ Example code here @@@@
 #
 # attach a LED to Output 6 on the board.
 # then PWM at 10Hz, cycle duty cycle then.
 #
 run.blink(.100,.900)
-'''
+```
 
 Next we can use the class methods to control the rest of the board.
 
 
-'''python
+```python
 print("> Do rate increase AO1")
 for x in range(100):
 	PWM1.value = x / 100.0
@@ -155,4 +155,4 @@ sleep(2)
 print("")
 print("> wait")
 sleep(10)
-'''
+```

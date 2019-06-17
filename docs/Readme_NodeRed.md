@@ -39,7 +39,10 @@ __http://192.168.1.4:1880/ui/#/0__ - User interface
 
 The flows can be developed in the editor, in the examples saved versions of the flows are provided for experimentation.  
 Mqtt messages are used to communicate with the underlying python program via the mosquito broker.  In this way the python programs are allways in control and the node-red interface is a bit like a SCADA application in that it just provides the user interface.  
+
 It is possible to just control everything from node-red since it has it's own GPIO control functions but this method of controlling the boards has not been covered in the examples.  Control of SPI and I2C devices isn't that easy but for basic DIO use cases using just node red is straightforward.  The mqt messaging nodes can be replaced with direct GPIO control node calls although it's then not possible to use the PiIO user library.  
+
+![](https://github.com/lawsonkeith/PiIO/raw/master/images/node_red_diagram2.PNG)
 
 
 ### Running node-red

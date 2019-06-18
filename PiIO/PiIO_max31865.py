@@ -59,7 +59,7 @@ class max31865(object):
 		# 0x8x to specify 'write register value'
 		# 0xx0 to specify 'configuration register'
 		#
-		# 0b10111010 = 0xBA
+		# 0b10110010 = 0xB2
 		# Config Register
 		# ---------------
 		# bit 7: Vbias -> 1 (ON)
@@ -70,12 +70,12 @@ class max31865(object):
 		# bit 1: fault status clear -> 1 (clear any fault)
 		# bit 0: 50/60 Hz filter select -> 0 (60Hz)
 		#
-		# 0b11011010 or 0xDA for continuous auto conversion 
+		# 0b11010010 or 0xD2 for continuous auto conversion 
 		# at 60Hz (faster conversion)
 		#
 
 		#one shot
-		self.writeRegister(0, 0xBA)
+		self.writeRegister(0, 0xB2)
 
 		# conversion time is less than 100ms
 		time.sleep(.1) #give it 100ms for conversion

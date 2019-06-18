@@ -64,7 +64,15 @@ Further notes on how to do this can be found here:
 ### Remote management
 
 Can be done once wifi is setup using ssh and by editing files using nano.  
-A terminal debugger is provided in some of the examples to help.
+A terminal debugger is provided in some of the examples to help.  _Putty_ is a good program for doing this via windows and it comes with a file transfer utility called _pscp_ which can be used to copy files from windows to the pi.
+
+```
+C:\Users\tau\Desktop>pscp Debugger.PNG pi@192.168.1.4:
+pi@192.168.1.4's password:
+Debugger.PNG              | 9 kB |   9.6 kB/s | ETA: 00:00:00 | 100%
+
+C:\Users\tau\Desktop>
+```
 
 
 ### Local management
@@ -72,3 +80,14 @@ A terminal debugger is provided in some of the examples to help.
 If possible it's easer to hook a monitor and keyboard up to the pi and edit the files locally as the range of editors will be much better if you use the destop version of stretch.  
 If you can using a LAN cable is more reliable than wifi also, you'll find wifi has limited range and generally suffers interference problems from devices such as cordless telephones.
 If you do this you can substitute __nano__ out for __geany__, __gedit__ or __thonny__ (the best)  
+
+
+### Debugging
+
+Some of the examples are included with a terminal debugger to facilitate command line debugging.  The debugger can also accept keyboard input.
+
+![](https://github.com/lawsonkeith/PiIO/raw/master/images/Debugger.PNG)
+
+Python can also be debugged using the _Thonny_ editor which has a built in debugger but requires a desktop environment to run.
+
+

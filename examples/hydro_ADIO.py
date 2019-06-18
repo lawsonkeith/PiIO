@@ -134,7 +134,7 @@ def timed_task1():
 				O2.on();
 				irrigation_timer.reset()
 				irrigation_cnt+=1
-				sleepMin(3)
+				sleepMin(15)
 				#solenoid off
 				O2.off();
 				hours_no_water = 0

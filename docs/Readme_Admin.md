@@ -74,6 +74,7 @@ Debugger.PNG              | 9 kB |   9.6 kB/s | ETA: 00:00:00 | 100%
 C:\Users\tau\Desktop>
 ```
 
+![](https://github.com/lawsonkeith/PiIO/raw/master/images/putty.PNG)
 
 ### Local management
 

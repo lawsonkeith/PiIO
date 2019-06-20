@@ -328,8 +328,6 @@ class PiIO_Analog:
 
 	def __init__(self,gain):
 		self.adc = ADS1015()
-		#self.adc = Adafruit_ADS1x15.ADS1015()
-
 		self.gain = gain
 		csPin = 18
 		misoPin = 9
@@ -337,7 +335,6 @@ class PiIO_Analog:
 		clkPin = 11
 
 		self.max = PiIO.PiIO_max31865.max31865(csPin,misoPin,mosiPin,clkPin)
-#		return self.adc
 
 	def get_raw(self,channel):
 		data = 0;

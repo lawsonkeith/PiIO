@@ -76,6 +76,10 @@ C:\Users\tau\Desktop>
 
 ![](https://github.com/lawsonkeith/PiIO/raw/master/images/putty.PNG)
 
+
+2.5Ghz wifi has better range than 5Ghz, but may suffer more from interference and the dongles are more powerful than onboard wifi.
+
+
 ### Local management
 
 If possible it's easer to hook a monitor and keyboard up to the pi and edit the files locally as the range of editors will be much better if you use the destop version of stretch.  

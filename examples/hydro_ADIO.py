@@ -1,3 +1,4 @@
+
 #!/usr/bin/python3
 
 #  example usage of Analog PCB for basic hydraulic control =======================================================
@@ -89,7 +90,7 @@ irrigation_manual = False
 fountain_cnt = 0
 fountain_mins = 0
 
-beer_setp = 15
+beer_setp = 10
 beer_temp = 0
 beer_enable = False
 beer_heating = False
@@ -113,11 +114,11 @@ def timed_task1():
 	API_key = 'a3f08180a153e131e0e13d9d30a7c315'
 	owm = OWM(API_key)
 	# sett locale to my garden
-	obs = owm.weather_at_coords(54.92,-1.74)      
 	while NoFault:	
 		if irrigation_auto :
 			# check weather forecast, see if there's any rain
 			print("T1> Checking weather")
+			obs = owm.weather_at_coords(54.92,-1.74)      
 			w = obs.get_weather()
 			rain_str = w.get_detailed_status()
 			print('T1>',rain_str)

@@ -11,7 +11,7 @@ from gpiozero import Button
 from gpiozero import PWMLED
 from gpiozero import LED 	# in GPIOZero outputs are called LEDs???
 from time import sleep
-from PiIO import PiIO_DO24_Mapper
+#from PiIO import PiIO_DO24_Mapper
 from PiIO import PiIO_DIO12_Mapper
 
 # @@@@ Example code here @@@@
@@ -50,8 +50,6 @@ i10 = Button(io.I10,pull_up=False);
 i11 = Button(io.I11,pull_up=False); 
 i12 = Button(io.I12,pull_up=False); 
 
-
-
 enable = LED(io.OE);
 run = LED(io.RUN);
 #
@@ -62,34 +60,49 @@ run = LED(io.RUN);
 enable.on()
 
 #
-print ("Program to echo when input pins are pulled high")
-print ("use 3V3 to 24V")
+print ("1. Program to echo when input pins are pulled high")
+print ("2. We will also set corresponding output high whwn this happens")
+print ("3. The output voltage will be Vfield - 1.2V")
+print ("4. Output 6 uses a PWM Output so will be 50% of the other values")
+print ("5. use 3V3 to 24V to trigger input.")
 print ()
 while True:
 	if  i1.value == 1:
 		print("i1 pressed")
+		o1.on()
 	if i2.value == 1:
 		print("i2 pressed")
+		o2.on()
 	if i3.value == 1:
 		print("i3 pressed")
+		o3.on()
 	if i4.value == 1:
 		print("i4 pressed")
+		o4.on()
 	if i5.value == 1:
 		print("i5 pressed")
+		o5.on()
 	if i6.value == 1:
 		print("i6 pressed")
+		o6.value = 0.5
 	if i7.value == 1:
 		print("i7 pressed")
+		o7.on()
 	if i8.value == 1:
 		print("i8 pressed")
+		o8.on()
 	if i9.value == 1:
 		print("i9 pressed")
+		o9.on()
 	if i10.value == 1:
 		print("i10 pressed")
+		o10.on()
 	if i11.value == 1:
 		print("i11 pressed")
+		o11.on()
 	if i12.value == 1:
 		print("i12 pressed")
+		o12.on()
 
 	sleep(1)
 	run.toggle()

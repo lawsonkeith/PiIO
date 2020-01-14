@@ -31,6 +31,7 @@ Example | Description
 basic_DO.py | Simple usage of DO PCB
 concurrent_DO.py | As above but implementing basic concurrency 
 basic_DIO.py | Basic usage of DIO PCB
+fault_DIO.py | Shows how short ccts and be detected and reset
 nodered_DIO.py | as above but with node red UI interface
 basic_ADIO.py | Basic usage of analog PCB
 PiIO.py | Low level library holding PCB abstractions and utility functions

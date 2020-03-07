@@ -18,7 +18,7 @@ if [ "$_IP" ]; then
 fi
 
 #
-#echo starting hydro ADIO
+#echo example how to auto start python code - starting hydro ADIO
 #
 /usr/bin/python3 /home/pi/PiIO/examples/hydro_ADIO.py 
 exit 0

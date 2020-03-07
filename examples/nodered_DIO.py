@@ -16,22 +16,10 @@ from gpiozero import LED 	# in GPIOZero outputs are called LEDs???
 from time import sleep
 from PiIO import PiIO_DO24_Mapper
 from PiIO import PiIO_DIO12_Mapper
+from PiIO import PiIO_col
+from PiIO import PiIO_timer
+from PiIO import PiIO_TON
 import paho.mqtt.client as mqtt #import the client1
-
-
-# subscribe to all sensor topics
-#
-def on_message_print(client, userdata, message):
-    print("%s %s" % (message.topic, message.payload))
-
-
-count=0
-broker_address="127.0.0.1" 
-client = mqtt.Client("pimoz") #create new instance
-client.on_message=on_message_print #attach function to callback
-client.connect(broker_address) #connect to broker
-client.loop_start()
-client.subscribe("sensor/#")
 
 
 
@@ -72,10 +60,40 @@ i10 = Button(io.I10,pull_up=False);
 i11 = Button(io.I11,pull_up=False); 
 i12 = Button(io.I12,pull_up=False); 
 
-
-
+col=PiIO_col()
+motor_timer = PiIO_TON(0,2)
 enable = LED(io.OE);
 run = LED(io.RUN);
+count=0
+servo_setp=0
+motor_enable=False
+run.blink(.100,.900)
+
+
+def on_mqt_message(client, userdata, message):
+	global servo_setp, motor_enable
+
+	if 'motor' in message.topic:	
+		motor_enable = (message.payload.decode('utf-8').lower() == 'true')
+		if motor_enable :
+			print("on")
+
+	if 'servo' in message.topic:	
+		servo_setp = float(message.payload.decode('utf-8'))
+		print(servo_setp)
+
+
+broker_address="127.0.0.1" 
+client = mqtt.Client("pimoz") #create new instance
+client.on_message=on_mqt_message #attach function to callback
+client.connect(broker_address) #connect to broker
+client.loop_start()
+client.subscribe("mem/#")
+
+
+
+
+
 #
 # @@@@ END HW INIT @@@@
 
@@ -84,39 +102,86 @@ run = LED(io.RUN);
 enable.on()
 
 #
-print ("Program to echo when input pins are pulled high")
-print ("use 3V3 to 24V")
+print (col.HOME,col.CLR,col.GREENB,col.BLACK," PiIO Example program - nodered_DIO \n",col.ENDC,sep='')
+print ("1. Program to illustrate node red indirect control of board")
+print ("2. You will have to change the mqtt broker IP in node red")
+print ("3. To do that click the pencil next to the broker in the mqtt node")
+print ("4. So rather than node red direct controlling GPIO it sends msgs to this pgm")
+print ("5. This provides additional functionality but is harder to implement.")
+print ("6. But we can now make the control much more intelligent")
+
+
+
 print ()
 while True:
 	count+=1
-	client.publish("mem/count",str(count))
+	# publish topics over mqtt to node red
+	client.publish("mem/count",str(count))	
+	client.publish("mem/input",str(input))
+	input=0
+
 	if  i1.value == 1:
 		print("i1 pressed")
+		input=1
 	if i2.value == 1:
 		print("i2 pressed")
+		input=2
 	if i3.value == 1:
 		print("i3 pressed")
+		input=3
 	if i4.value == 1:
 		print("i4 pressed")
+		input=4
 	if i5.value == 1:
 		print("i5 pressed")
+		input=5
 	if i6.value == 1:
 		print("i6 pressed")
+		input=6
 	if i7.value == 1:
 		print("i7 pressed")
+		input=7
 	if i8.value == 1:
 		print("i8 pressed")
+		input=8
 	if i9.value == 1:
 		print("i9 pressed")
+		input=9
 	if i10.value == 1:
 		print("i10 pressed")
+		input=10
 	if i11.value == 1:
 		print("i11 pressed")
+		input=11
 	if i12.value == 1:
 		print("i12 pressed")
+		input=12
 
 	sleep(1)
 	run.toggle()
+
+	# motor on output 6 - implement power saving control of motor
+	#
+	if motor_enable:
+		if motor_timer.ton(1):
+			# ok it's pulled in PWM the output to lower current draw
+			o6.value = 0.4
+			# print("lo pwr")
+		else:
+			# max op to pull in contactor
+			o6.value = 1.0
+			# print("hi pwr")
+				
+	else:
+		# leave it off
+		o6.value = 0
+		motor_timer.ton(0)
+
+
+
+
+
+
 
 
 

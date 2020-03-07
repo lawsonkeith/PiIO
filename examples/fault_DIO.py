@@ -70,7 +70,7 @@ print ("2. This is as per the basic functionality program, set an input high to 
 print ("3. But if that output goes into FAULT the software can detect it so long as the solder link LK1 is made on the board")
 print ("4. Make sure NOT to set the solder link and set the RUN pin to output as this could damage the PI when a fault occurs")
 print ("5. To test, set input 1 high then short output 1 to ground, the software should detect, then clear the fault state")
-print("6. Also note that the RUN and FAULT LED will be set permanently high now.")
+print ("6. Also note that the RUN and FAULT LED will be set permanently high now.")
 print ()
 while True:
 	try:

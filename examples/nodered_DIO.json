@@ -1,0 +1,2 @@
+[{"id":"b62a647e.cda348","type":"mqtt out","z":"6c1389c4.483a98","name":"","topic":"mem/motor","qos":"","retain":"","broker":"6285cbc1.675614","x":564.5,"y":184,"wires":[]},{"id":"6285cbc1.675614","type":"mqtt-broker","z":"","name":"pimoz","broker":"192.168.1.9","port":"1883","clientid":"test-client","usetls":false,"compatmode":true,"keepalive":"60","cleansession":true,"birthTopic":"","birthQos":"0","birthPayload":"","closeTopic":"","closeQos":"0","closePayload":"","willTopic":"","willQos":"0","willPayload":""}]
+

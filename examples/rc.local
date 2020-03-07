@@ -20,5 +20,5 @@ fi
 #
 #echo starting hydro ADIO
 #
-/usr/bin/python3 /home/pi/python-PiIO/examples/hydro_ADIO.py 
+/usr/bin/python3 /home/pi/PiIO/examples/hydro_ADIO.py 
 exit 0

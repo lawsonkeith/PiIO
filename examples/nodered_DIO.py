@@ -33,13 +33,12 @@ import paho.mqtt.client as mqtt #import the client1
 # @@@@ Hardware init @@@@
 #
 io = PiIO_DIO12_Mapper()
-o1 = LED(io.O1); 
+o1 = PWMLED(io.O6,True,0,1000);	# motor
 o2 = LED(io.O2); 
 o3 = LED(io.O3); 
 o4 = LED(io.O4); 
 o5 = LED(io.O5); 
-#o6 = LED(O6) 
-o6 = PWMLED(io.O6,True,0,1000);
+o6 = PWMLED(io.O6,True,0,1000); # contactor
 o7 = LED(io.O7); 
 o8 = LED(io.O8); 
 o9 = LED(io.O9); 
@@ -61,15 +60,16 @@ i11 = Button(io.I11,pull_up=False);
 i12 = Button(io.I12,pull_up=False); 
 
 col=PiIO_col()
-motor_timer = PiIO_TON(0,2)
+motor_timer = PiIO_TON(0,2) # 2s timer
 enable = LED(io.OE);
 run = LED(io.RUN);
 count=0
 servo_setp=0
 motor_enable=False
-run.blink(.100,.900)
+run.blink(.100,.900) # run LED
 
-
+# mqt message handler
+#
 def on_mqt_message(client, userdata, message):
 	global servo_setp, motor_enable
 
@@ -91,9 +91,6 @@ client.loop_start()
 client.subscribe("mem/#")
 
 
-
-
-
 #
 # @@@@ END HW INIT @@@@
 
@@ -104,12 +101,11 @@ enable.on()
 #
 print (col.HOME,col.CLR,col.GREENB,col.BLACK," PiIO Example program - nodered_DIO \n",col.ENDC,sep='')
 print ("1. Program to illustrate node red indirect control of board")
-print ("2. You will have to change the mqtt broker IP in node red")
+print ("2. note - You will have to update the mqtt broker IP in node red")
 print ("3. To do that click the pencil next to the broker in the mqtt node")
 print ("4. So rather than node red direct controlling GPIO it sends msgs to this pgm")
 print ("5. This provides additional functionality but is harder to implement.")
 print ("6. But we can now make the control much more intelligent")
-
 
 
 print ()
@@ -157,8 +153,6 @@ while True:
 		print("i12 pressed")
 		input=12
 
-	sleep(1)
-	run.toggle()
 
 	# motor on output 6 - implement power saving control of motor
 	#
@@ -178,10 +172,12 @@ while True:
 		motor_timer.ton(0)
 
 
+	# motor on output 1
+	#
+	# here we control a motor but we only allow it on it the motor is enabled
+	if motor_enable:
+		o1.value = servo_setp / 100.0
+	else:
+		o1 = 0
 
-
-
-
-
-
-
+	sleep(1)

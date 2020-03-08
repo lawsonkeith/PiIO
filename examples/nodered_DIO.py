@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+#
 #  example usage of DIO PCB with node red UI
 #  =========================================
 #
@@ -7,9 +8,10 @@
 #  see https://gpiozero.readthedocs.io/en/stable/recipes.html
 #  for info on GPIOZero
 #
-# Publishes 	mem/count (Str)
-# Subscribes	sensor/sensor1
-#
+#  1. This example powers a contactor on DO6, but once pulled in uses PWM to reduce current draw
+#  2. Also O1 can be controlled via a node-red slider
+#  3. And any digital input is read and it's value passed back to th UI
+# 
 from gpiozero import Button
 from gpiozero import PWMLED
 from gpiozero import LED 	# in GPIOZero outputs are called LEDs???
@@ -24,43 +26,39 @@ import paho.mqtt.client as mqtt #import the client1
 
 
 
-# @@@@ Example code here @@@@
-#
-# attach a LED to Output 6 on the board.
-# then PWM at 10Hz, cycle duty cycle then.
-#
 
 # @@@@ Hardware init @@@@
 #
 io = PiIO_DIO12_Mapper()
-o1 = PWMLED(io.O6,True,0,1000);	# motor
-o2 = LED(io.O2); 
-o3 = LED(io.O3); 
-o4 = LED(io.O4); 
-o5 = LED(io.O5); 
-o6 = PWMLED(io.O6,True,0,1000); # contactor
-o7 = LED(io.O7); 
-o8 = LED(io.O8); 
-o9 = LED(io.O9); 
-o10 = LED(io.O10); 
-o11 = LED(io.O11);
-o12 = LED(io.O12);
+o1 = PWMLED(io.O1,True,0,1000)	# PWM
+o2 = LED(io.O2)
+o3 = LED(io.O3)
+o4 = LED(io.O4)
+o5 = LED(io.O5)
+o6 = PWMLED(io.O6,True,0,1000) # contactor
+o7 = LED(io.O7) 
+o8 = LED(io.O8)
+o9 = LED(io.O9)
+o10 = LED(io.O10)
+o11 = LED(io.O11)
+o12 = LED(io.O12)
 
-i1 = Button(io.I1,pull_up=False); 
-i2 = Button(io.I2,pull_up=False); 
-i3 = Button(io.I3,pull_up=False); 
-i4 = Button(io.I4,pull_up=False); 
-i5 = Button(io.I5,pull_up=False); 
-i6 = Button(io.I6,pull_up=False); 
-i7 = Button(io.I7,pull_up=False); 
-i8 = Button(io.I8,pull_up=False); 
-i9 = Button(io.I9,pull_up=False); 
-i10 = Button(io.I10,pull_up=False);
-i11 = Button(io.I11,pull_up=False); 
-i12 = Button(io.I12,pull_up=False); 
+i1 = Button(io.I1,pull_up=False)
+i2 = Button(io.I2,pull_up=False)
+i3 = Button(io.I3,pull_up=False)
+i4 = Button(io.I4,pull_up=False)
+i5 = Button(io.I5,pull_up=False)
+i6 = Button(io.I6,pull_up=False)
+i7 = Button(io.I7,pull_up=False)
+i8 = Button(io.I8,pull_up=False)
+i9 = Button(io.I9,pull_up=False)
+i10 = Button(io.I10,pull_up=False)
+i11 = Button(io.I11,pull_up=False)
+i12 = Button(io.I12,pull_up=False)
 
 col=PiIO_col()
 motor_timer = PiIO_TON(0,2) # 2s timer
+run_timer = PiIO_timer() # run timer
 enable = LED(io.OE);
 run = LED(io.RUN);
 count=0
@@ -76,13 +74,15 @@ def on_mqt_message(client, userdata, message):
 	if 'motor' in message.topic:	
 		motor_enable = (message.payload.decode('utf-8').lower() == 'true')
 		if motor_enable :
+			run_timer.reset()
 			print("on")
 
 	if 'servo' in message.topic:	
 		servo_setp = float(message.payload.decode('utf-8'))
 		print(servo_setp)
 
-
+# create client
+#
 broker_address="127.0.0.1" 
 client = mqtt.Client("pimoz") #create new instance
 client.on_message=on_mqt_message #attach function to callback
@@ -114,6 +114,10 @@ while True:
 	# publish topics over mqtt to node red
 	client.publish("mem/count",str(count))	
 	client.publish("mem/input",str(input))
+	if motor_enable :
+		client.publish("mem/run_time",run_timer.read())
+	else:
+		client.publish("mem/run_time","--")
 	input=0
 
 	if  i1.value == 1:
@@ -178,6 +182,6 @@ while True:
 	if motor_enable:
 		o1.value = servo_setp / 100.0
 	else:
-		o1 = 0
+		o1.value = 0
 
 	sleep(1)

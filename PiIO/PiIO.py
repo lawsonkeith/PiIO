@@ -48,6 +48,8 @@ class PiIO_col:
 	RESET = '\033[0;0H\033[2J'
 
 
+# This is a funciton to get a char from the keyboard in a non blocking way
+#
 def PiIO_getc():
 	try:
 		c = None
@@ -123,7 +125,7 @@ class PiIO_RunEvery:
  
 
 
-# Moving average function
+# Moving (exponential) average function
 #
 class PiIO_EMA:
 	alpha=0
@@ -313,8 +315,8 @@ class PiIO_TOF:
 		return False
 
 
-
-
+# Class to interface to the PIIO analog board
+#
 class PiIO_Analog:
 	# GPIO Mapping
 	O1 = 5
@@ -325,7 +327,7 @@ class PiIO_Analog:
 	O6 = 20
 	O7 = 26
 	O8 = 21
-	RUN=8
+	RUN=25
 	OE=12
 	PWM1=17
 	PWM2=27
@@ -333,7 +335,7 @@ class PiIO_Analog:
 	I1 = 22
 	I2 = 23
 	I3 = 24
-	I4 = 25
+	I4 = 8
 	FAULT=7
 	# Constants
 	gain = 1;
@@ -372,6 +374,8 @@ class PiIO_Analog:
 		tempC = self.max.readTemp()
 		return tempC
 
+
+# class to interface to the PIIO digi out 24 board
 #
 class PiIO_DO24_Mapper(object):
 	# Map IO numbers to GPIO Numbers
@@ -406,7 +410,7 @@ class PiIO_DO24_Mapper(object):
 		pass
 
 
-# IO Mapper class, maps GPIO # to output numbers
+# IO Mapper class, PIIO 12 board
 #
 class PiIO_DIO12_Mapper(object):
 	# Map IO numbers to GPIO Numbers

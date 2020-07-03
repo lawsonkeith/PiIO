@@ -13,7 +13,8 @@ from gpiozero import LED 	# in GPIOZero outputs are called LEDs???
 from time import sleep
 #from PiIO import PiIO_DO24_Mapper
 from PiIO import PiIO_DIO12_Mapper
-
+from PiIO import PiIO_col
+	
 # @@@@ Example code here @@@@
 #
 # attach a LED to Output 6 on the board.
@@ -50,6 +51,7 @@ i10 = Button(io.I10,pull_up=False);
 i11 = Button(io.I11,pull_up=False); 
 i12 = Button(io.I12,pull_up=False); 
 
+col=PiIO_col()
 enable = LED(io.OE);
 run = LED(io.RUN);
 #
@@ -60,8 +62,9 @@ run = LED(io.RUN);
 enable.on()
 
 #
+print (col.HOME,col.CLR,col.GREENB,col.BLACK," PiIO Example program - basic_DIO \n",col.ENDC,sep='')
 print ("1. Program to echo when input pins are pulled high")
-print ("2. We will also set corresponding output high whwn this happens")
+print ("2. We will also set corresponding output high wewn this happens")
 print ("3. The output voltage will be Vfield - 1.2V")
 print ("4. Output 6 uses a PWM Output so will be 50% of the other values")
 print ("5. use 3V3 to 24V to trigger input.")

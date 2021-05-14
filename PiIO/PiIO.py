@@ -410,7 +410,7 @@ class PiIO_DO24_Mapper(object):
 		pass
 
 
-# IO Mapper class, PIIO 12 board
+
 #
 class PiIO_DIO12_Mapper(object):
 	# Map IO numbers to GPIO Numbers
@@ -440,6 +440,30 @@ class PiIO_DIO12_Mapper(object):
 	I12 = 21
 	RUN = 22
 	OE = 23
+
+	def __setattr__(self, *_):
+		pass
+
+#
+class PiIO_232_Mapper(object):
+	# Map IO numbers to GPIO Numbers
+	O1 = 19
+	O2 = 25
+	O3 = 10
+	O4 = 24
+	O5 = 23
+	O6 = 22
+	O7 = 27
+	O8 = 18
+	I1 = 9
+	I2 = 11
+	I3 = 8
+	I4 = 7
+	I5 = 5
+	I6 = 6
+	I7 = 12
+	I8 = 13
+	RUN = 26
 
 	def __setattr__(self, *_):
 		pass

@@ -14,7 +14,7 @@ The PCB has the following functionality:
 * One RUN LED
 * One Fault LED 
 
-For more information please refer to the manual located at [PiIO](PiIO.co.uk).
+For more information please refer to the manual located at [PiIO](https://PiIO.co.uk).
 
 ### Software description
 Python 3 example programs are provided to allow you to quickly explore the boards features.

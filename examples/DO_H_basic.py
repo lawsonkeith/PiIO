@@ -2,16 +2,16 @@
 #  example usage of DIO24 PCB PCB
 #  ===============================
 #
-#  K Lawson April 2021
+#  K Lawson June 2021
 # 
 #  see https://gpiozero.readthedocs.io/en/stable/recipes.html
 #  for info on GPIOZero
 #
 from gpiozero import Button
 from gpiozero import PWMLED
-from gpiozero import LED 	# in GPIOZero outputs are called LEDs???
+from gpiozero import LED 	# in GPIOZero outputs are called LEDs
 from time import sleep
-from PiIO import PiIO2_DO24_Mapper
+from PiIO import PiIO_DO_H_Mapper
 from PiIO import PiIO_col
 	
 # @@@@ Example code here @@@@
@@ -22,14 +22,14 @@ from PiIO import PiIO_col
 
 # @@@@ Hardware init @@@@
 #
-io = PiIO2_DO24_Mapper()
+io = PiIO2_DO_H_Mapper()
 o1 = LED(io.O1); 
 o2 = LED(io.O2); 
 o3 = LED(io.O3); 
 o4 = LED(io.O4); 
 o5 = LED(io.O5); 
 #o6 = LED(O6) 
-o6 = PWMLED(io.O6,True,0,10000);
+o6 = PWMLED(io.O6,True,0,500);
 o7 = LED(io.O7); 
 o8 = LED(io.O8); 
 o9 = LED(io.O9); 
@@ -53,14 +53,9 @@ col=PiIO_col()
 run = LED(io.RUN);
 #
 # @@@@ END HW INIT @@@@
-
-# Enable outputs
-#
-
-
 #
 try:
-	print (col.HOME,col.CLR,col.GREENB,col.BLACK," PiIO Example program - basic_DO24 \n",col.ENDC,sep='')
+	print (col.HOME,col.CLR,col.GREENB,col.BLACK," PiIO Example program - basic_DO_H \n",col.ENDC,sep='')
 	print ("1. Program to set outputs high")
 	print ("2. We will step through 1s at a time")
 	print ("3. The output voltage will be Vfield")

@@ -1,21 +1,23 @@
 ## PiIO python repository
 
-![](https://github.com/lawsonkeith/PiIO/raw/master/images/PhiSide.PNG)
+![](https://github.com/lawsonkeith/PiIO/raw/master/images/PiIO_232_ass.jpg)
 
+This is a Python3 IO library for the Raspberry Pi PiIO boards which demonstrates:
+The main repository for board level information is now the [PiIO Web page](http://www.PiIO.co.uk).
+Read the admin page for information on installing the packages.
 
-An Python3 IO library for the Paspberry Pi PiIO boards which demonstrates:
 
 * GPIO IO ancluding SPI and I2C peripheral access
 * A basic PLC style library containing basic control functions
 * A framework for concurrency
 * Example node red interface using pub sub topics
 
+A description of the recources available per board is available here:
 
-There are examples for the three PiIO PCBs:
-
-* [DO24 PCB](./docs/Readme_DO24.md)
-* [DIO12 PCB](./docs/Readme_DIO12.md)
-* [ADIO PCB](./docs/Readme_ADIO.md)
+* [PiIO-232-H](./docs/Readme_232_H.md)
+* [PiIO-DO-H](./docs/Readme_DO_H.md)
+* [PiIO-DIO](./docs/Readme_DIO12.md)
+* [PiIO-ADIO](./docs/Readme_ADIO.md)
 
 
 As well as a description of the four main software topics:
@@ -26,14 +28,7 @@ As well as a description of the four main software topics:
 * [Node red](docs/Readme_NodeRed.md)
 
 
-Example | Description
---- | ---
-basic_DO.py | Simple usage of DO PCB
-concurrent_DO.py | As above but implementing basic concurrency 
-basic_DIO.py | Basic usage of DIO PCB
-fault_DIO.py | Shows how short ccts and be detected and reset
-nodered_DIO.py | as above but with node red UI interface
-basic_ADIO.py | Basic usage of analog PCB
-PiIO.py | Low level library holding PCB abstractions and utility functions
-basic_functs.py | examples for PiIO utility funciotns such as timer functs
-hydro_ADIO | Advanced exmple of a hamebrew controller and irrigation system
+## Archive
+Discontinued board information is archived here:
+* [PiIO-DO24](./docs/old/Readme_DO24.md)
+

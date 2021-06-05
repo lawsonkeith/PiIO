@@ -1,6 +1,6 @@
 ## PiIO python repository
 
-![](https://github.com/lawsonkeith/PiIO/raw/master/images/PiIO_232_ass.jpg)
+![](https://github.com/lawsonkeith/PiIO/raw/master/images/PiIO_logo_sm.PNG)
 
 This is a Python3 IO library for the Raspberry Pi PiIO boards which demonstrates:
 The main repository for board level information is now the [PiIO Web page](http://www.PiIO.co.uk).

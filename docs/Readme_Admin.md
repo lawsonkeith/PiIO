@@ -1,8 +1,8 @@
-## PiIO Rasbian administrtion guide
+## PiIO Raspbian administrtion guide
 
 ### Image
 
-All examples were witten using rasbian stretch lite.
+All examples were witten using raspbian stretch lite.
 
 
 ### Installation

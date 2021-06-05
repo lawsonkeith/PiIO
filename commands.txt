@@ -8,6 +8,7 @@ update_lib.sh											update lib with any changes made
 Images
 ======
 convert -resize 50% source dest							resize images on command line using imagemagick
+convert PiIO_DIO.jpg -print "Size: %wx%h\n"				get img size
 
 Linux
 =====

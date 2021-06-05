@@ -3,7 +3,7 @@
 ![](https://github.com/lawsonkeith/PiIO/raw/master/images/PiIO_logo_sm.PNG)
 
 This is a Python3 IO library for the Raspberry Pi PiIO boards which demonstrates:
-The main repository for board level information is now the [PiIO Web page](https:PiIO.co.uk).
+The main repository for board level information is now the [PiIO Web page](https://PiIO.co.uk).
 Read the admin page for information on installing the packages.
 
 

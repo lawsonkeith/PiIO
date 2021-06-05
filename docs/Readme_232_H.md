@@ -1,18 +1,14 @@
-## PiIO ADIO PCB
+## PiIO 232 H PCB
 
-![](https://github.com/lawsonkeith/PiIO/raw/master/images/PiIO_ADIO.jpg)
+![](https://github.com/lawsonkeith/PiIO/raw/master/images/PiIO_232.jpg)
 
 ### Description
 The PCB has the following functionality:
 
-* One PT100 interface
-* 2 Analog outputs
-* 4 Analog inputs
+* One 232 port with RTS/CTS control 
 * 8 Digital outputs
-* 4 Digital inputs
-* One Digital output enable 
+* 8 Digital inputs
 * One RUN LED
-* One Fault LED 
 
 For more information please refer to the manual located at [PiIO](PiIO.co.uk).
 
@@ -21,9 +17,9 @@ Python 3 example programs are provided to allow you to quickly explore the board
 
 Example | Description
 --- | ---
-ADIO_basic.py | Basic usage of analog PCB
-ADIO_hydro.py | Advanced exmple of a hamebrew controller and irrigation system
+232_H_basic.py | simple IO check program
 PiIO.py | Low level library holding PCB abstractions and utility functions
 basic_functs.py | examples for PiIO utility funciotns such as timer functs
+
 
 

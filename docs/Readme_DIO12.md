@@ -1,6 +1,6 @@
 ## PiIO DIO PCB
 
-![](https://github.com/lawsonkeith/PiIO/raw/master/images/PiIO_DIO_ASS.jpg)
+![](https://github.com/lawsonkeith/PiIO/raw/master/images/PiIO_DIO.jpg)
 
 ### Description
 The PCB has the following functionality:

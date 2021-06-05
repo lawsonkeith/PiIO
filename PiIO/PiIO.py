@@ -1,6 +1,6 @@
 #  PiIO General library module ===========================
 #
-#  K Lawson April 2019
+#  K Lawson June 2021
 # 
 #  see https://gpiozero.readthedocs.io/en/stable/recipes.html
 #  for info on GPIOZero
@@ -315,6 +315,12 @@ class PiIO_TOF:
 		return False
 
 
+#########################################################################
+# EARLY BOARDS NOT CONFORMING TO HAT MECHANICAL SPECIFICATION			#
+# 1. Board is not rectangular											#
+# 2. Uses UDN series of darlington drivers								#
+#########################################################################
+
 # Class to interface to the PIIO analog board
 #
 class PiIO_Analog:
@@ -360,13 +366,15 @@ class PiIO_Analog:
 	def get_scaled(self,channel):
 		data = 0;
 		data = self.adc.read_adc(channel, self.gain)
-		# Rratio	0.2032520325 (100/492)
+		# ADC input impedance is 6MR in 2V gain 
+		# Rratio	0.2006
 		# Vmax		10V	
-		# Vadc@MAX	2.0325203252	
-		# Raw@MAX	0.992441565 x 2^11 = 2032.5203252033
+		# Va dc@MAX	2.006 V	
+		# Raw@MAX V	2006
 		#
-		# RafToVolts Scale		0.00492 
-		data *= 4.92 / 1000
+		# RawToVolts Scale		0.00492 
+		# data *= 4.92 / 1000 this was wrong did not take into account ADC resistance
+		data *= 4.985 / 1000
 		time.sleep(.001)
 		return data #(volts)
 	
@@ -410,7 +418,6 @@ class PiIO_DO24_Mapper(object):
 		pass
 
 
-
 #
 class PiIO_DIO12_Mapper(object):
 	# Map IO numbers to GPIO Numbers
@@ -444,8 +451,16 @@ class PiIO_DIO12_Mapper(object):
 	def __setattr__(self, *_):
 		pass
 
+#########################################################################
+# BOARDS CONFORMING TO HAT MECHANICAL SPECIFICATION						#
+# 1. Named PiIO-xxxx-H													#
+# 2. Are rectangular													#
+# 3. Use TBD62783 DMOS driver arrays									#
+# 4. Do not have fault LED												#
+#########################################################################
+
 #
-class PiIO_232_Mapper(object):
+class PiIO_232_H_Mapper(object):
 	# Map IO numbers to GPIO Numbers
 	O1 = 19
 	O2 = 25
@@ -468,16 +483,35 @@ class PiIO_232_Mapper(object):
 	def __setattr__(self, *_):
 		pass
 
-
-
-
-
-#	def __init__(self, str):
-#		print "KK" 
-#		print str
-#		return  
 #
-#PiIO_DO24_Mapper = PiIO_DO24_Mapper()
-
-
+class PiIO_DO_H_Mapper(object):
+	# Map IO numbers to GPIO Numbers
+	O1 = 22
+	O2 = 27
+	O3 = 18
+	O4 = 17
+	O5 = 15
+	O6 = 4
+	O7 = 3
+	O8 = 2
+	O9 = 1
+	O10 = 0
+	O11 = 11
+	O12 = 25
+	O13 = 23
+	O14 = 24
+	O15 = 10
+	O16 = 9
+	O17 = 5
+	O18 = 6
+	O19 = 12
+	O20 = 13
+	O21 = 19
+	O22 = 16
+	O23 = 26
+	O24 = 20
+	RUN = 21
 	
+
+	def __setattr__(self, *_):
+		pass

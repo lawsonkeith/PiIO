@@ -1,8 +1,8 @@
 #!/usr/bin/python3
-#  example usage of PHiSideDriver PCB
-#  ==================================
+#  example usage of DIO12 PCB
+#  ==========================
 #
-#  K Lawson April 2019
+#  K Lawson April 2021
 # 
 #  see https://gpiozero.readthedocs.io/en/stable/recipes.html
 #  for info on GPIOZero
@@ -11,7 +11,6 @@ from gpiozero import Button
 from gpiozero import PWMLED
 from gpiozero import LED 	# in GPIOZero outputs are called LEDs???
 from time import sleep
-#from PiIO import PiIO_DO24_Mapper
 from PiIO import PiIO_DIO12_Mapper
 from PiIO import PiIO_col
 	

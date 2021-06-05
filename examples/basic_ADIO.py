@@ -13,7 +13,7 @@ from gpiozero import PWMLED
 from gpiozero import LED 	# in GPIOZero outputs are called LEDs???
 from gpiozero import Button
 from time import sleep
-from PiIO import PiIO_DO24_Mapper
+#from PiIO import PiIO_DO24_Mapper
 from PiIO import PiIO_Analog
 
 # Choose a gain of 1 for reading voltages from 0 to 4.09V.
@@ -26,7 +26,7 @@ from PiIO import PiIO_Analog
 #  -  16 = +/-0.256V
 # See table 3 in the ADS1015/ADS1115 datasheet for more info on gain.
 GAIN = 2
-
+ 
 
 # @@@@ Hardware init @@@@
 #

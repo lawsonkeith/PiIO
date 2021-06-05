@@ -1,6 +1,14 @@
 Useful commands
 ===============
 
+PiIO
+====
+update_lib.sh											update lib with any changes made
+
+Images
+======
+convert -resize 50% source dest							resize images on command line using imagemagick
+
 Linux
 =====
 ATL1-12													new terminal
@@ -14,6 +22,7 @@ dmesg | grep											look at startup cmds
 top														performance tasks
 ifconfig												ip stuff
 man ls													manual
+df														show free space
 
 Nano
 ====
@@ -44,7 +53,6 @@ Minicom
 Ctrl+A X												quit
 minicom -b 19200 -o -D /dev/ttyAMA0						serial tests
 
-
 Git
 ===
 git clone https://github.com/lawsonkeith/PiIO.git		Clone repo
@@ -53,6 +61,7 @@ git pull origin master
 git reset --hard HEAD									ditch local changes
 git status
 git commit -am "some msg"								commit changes
+git push origin master									push back to main repo
 
 GPIO
 ====

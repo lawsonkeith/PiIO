@@ -1,9 +1,7 @@
 #!/usr/bin/python3
 #  example usage of PiIO DO H PCB
-#  ==================================
+#  ==============================
 #
-#  K Lawson 
-# 
 #  see https://gpiozero.readthedocs.io/en/stable/recipes.html
 #  for info on GPIOZero
 #

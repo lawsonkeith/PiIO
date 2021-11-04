@@ -1,7 +1,7 @@
 
 #!/usr/bin/python3
 
-#  example usage of Analog PCB for basic hydraulic control =======================================================
+#  example usage of PiIO ADIO PCB for basic hydraulic control =======================================================
 #
 #  K Lawson June 2019
 # 

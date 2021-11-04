@@ -18,6 +18,8 @@ Python 3 example programs are provided to allow you to quickly explore the board
 Example | Description
 --- | ---
 232_H_basic.py | simple IO check program
+232_H_Protocolconv.py | Basic protocol converter example to read gyro string
+232_H_ProtocolconvErrChcke.py | Basic protocol converter example to read gyro string with error checking
 PiIO.py | Low level library holding PCB abstractions and utility functions
 basic_functs.py | examples for PiIO utility funciotns such as timer functs
 

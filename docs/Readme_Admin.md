@@ -23,6 +23,7 @@ __Python packages__
 | gpiozero | python gpio framework |
 | smbus | python smbus framework |
 | pyowm | python open weather map framework |
+| pyserial | required for the 232 board |
 
 All packages need to be installed as root e.g. [sudo pip3 install paho-mqtt]
 

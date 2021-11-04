@@ -1,19 +1,16 @@
 #!/usr/bin/python3
-#  example usage of PHiSideDriver PCB
-#  ==================================
+#  example usage of PiIO ADIO PCB
+#  ==============================
 #
-#  K Lawson April 2019
-# 
 #  see https://gpiozero.readthedocs.io/en/stable/recipes.html
 #  for info on GPIOZero
 #
-#  This example turns on the outputs on this 24 output only board
+#  This example does an IO check on the board
 #
 from gpiozero import PWMLED
 from gpiozero import LED 	# in GPIOZero outputs are called LEDs???
 from gpiozero import Button
 from time import sleep
-#from PiIO import PiIO_DO24_Mapper
 from PiIO import PiIO_Analog
 
 # Choose a gain of 1 for reading voltages from 0 to 4.09V.

@@ -2,8 +2,6 @@
 #
 #  example usage of DIO PCB with node red UI
 #  =========================================
-#
-#  K Lawson April 2019
 # 
 #  see https://gpiozero.readthedocs.io/en/stable/recipes.html
 #  for info on GPIOZero

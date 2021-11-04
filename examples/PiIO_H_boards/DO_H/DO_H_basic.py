@@ -1,9 +1,7 @@
 #!/usr/bin/python3
-#  example usage of DIO24 PCB PCB
-#  ===============================
+#  example usage of PiIO DO H PCB
+#  ==============================
 #
-#  K Lawson June 2021
-# 
 #  see https://gpiozero.readthedocs.io/en/stable/recipes.html
 #  for info on GPIOZero
 #

@@ -32,4 +32,6 @@ As well as a description of the four main software topics:
 Discontinued board information is archived here:
 * [PiIO-DO24](./docs/old/Readme_DO24.md)
 
-
+## Porting
+Should you wish to port this to another language such as C++, refer to the PiIO.py file.
+This contains GPIO mappings and other useful info.

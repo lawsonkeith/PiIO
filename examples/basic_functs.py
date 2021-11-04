@@ -1,9 +1,7 @@
 #!/usr/bin/python3
-#  example usage of PHiSideDriver PCB
-#  ==================================
+#  example usage of PiIO library functs 
+#  ====================================
 #
-#  K Lawson April 2019
-# 
 #  see https://gpiozero.readthedocs.io/en/stable/recipes.html
 #  for info on GPIOZero
 #

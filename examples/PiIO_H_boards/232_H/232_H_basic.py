@@ -1,15 +1,13 @@
 #!/usr/bin/python3
-#  example usage of PiIO 232 PCB
-#  ==================================
-#
-#  K Lawson June 2021
+#  example usage of PiIO 232 H PCB
+#  ===============================
 # 
 #  see https://gpiozero.readthedocs.io/en/stable/recipes.html
 #  for info on GPIOZero
 #
 from gpiozero import Button
 from gpiozero import PWMLED
-from gpiozero import LED 	# in GPIOZero outputs are called LEDs???
+from gpiozero import LED 	# in GPIOZero outputs are called LEDs
 from time import sleep
 from PiIO import PiIO_232_H_Mapper
 from PiIO import PiIO_col
@@ -52,7 +50,7 @@ run = LED(io.RUN);
 print (col.HOME,col.CLR,col.GREENB,col.BLACK," PiIO Example program - basic_232 \n",col.ENDC,sep='')
 print ("1. Program to echo when input pins are pulled high")
 print ("2. We will also set corresponding output high when this happens")
-print ("3. The output voltage will be Vfield - 1.2V")
+print ("3. The output voltage will be Vfield")
 print ("4. Output 6 uses a PWM Output so will be 50% of the other values")
 print ("5. use 3V3 to 24V to trigger input.")
 print ()

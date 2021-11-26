@@ -3,73 +3,83 @@ Useful commands
 
 PiIO
 ====
-update_lib.sh											update lib with any changes made
+update_lib.sh					update lib with any changes made
 
 Images
 ======
-convert -resize 50% source dest							resize images on command line using imagemagick
-convert PiIO_DIO.jpg -print "Size: %wx%h\n"				get img size
+convert -resize 50% source dest			resize images on command line using imagemagick
+convert PiIO_DIO.jpg -print "Size: %wx%h\n"	get img size
 
 Linux
 =====
-ATL1-12													new terminal
+ATL1-12						new terminal
 
-sudo raspi-config										config
-sudo i2cdetect -y 1										detect i2c devices
+sudo raspi-config				config
+sudo i2cdetect -y 1				detect i2c devices
 sudo apt-get install i2cdetect
-sudo ps -A												show processes
+sudo ps -A					show processes
 
-dmesg | grep											look at startup cmds
-top														performance tasks
-ifconfig												ip stuff
-man ls													manual
-df														show free space
+dmesg | grep					look at startup cmds
+top						performance tasks
+ifconfig					ip stuff
+man ls						manual
+df						show free space
 
 sudo mount /dev/sda1 /media/usb -o uid=pi,gid=pi		mount usb
 
 Nano
 ====
-nano /etc/nanorc										config
+nano /etc/nanorc				config
 set linenumbers
-alt+s													scroll mode
-alt+u													undo
-ctrl/alt space											move 1 word
-ctrl w r 												search replace
-alt a 6 												select copy
-ctrl u													paste
+alt+s						scroll mode
+alt+u						undo
+ctrl/alt space					move 1 word
+ctrl w r 					search replace
+alt a 6 					select copy
+ctrl u						paste
 alt >													next buffer
 alt p 													whitespaces
 alt del													del line
 
 Serial
 ======
-minicom 
+minicom 					ok term
+picocom 					better term
+picocom -b 19200 -r -l /dev/ttyAMA0
 
 
 Python
 ======
-pip3 install pyserial									get serial port lib
-sudo python3 setup.py install							install/update PiIO lib
+pip3 install pyserial				get serial port lib
+sudo python3 setup.py install			install/update PiIO lib
 
 Minicom
 ========
-Ctrl+A X												quit
-minicom -b 19200 -o -D /dev/ttyAMA0						serial tests
+Ctrl+A X					quit
+minicom -b 19200 -o -D /dev/ttyAMA0		serial tests
 
 Git
 ===
-git clone https://github.com/lawsonkeith/PiIO.git		Clone repo
+git clone https://github.com/lawsonkeith/PiIO.git	Clone repo
 git status
 git pull origin master
-git reset --hard HEAD									ditch local changes
+git reset --hard HEAD					ditch local changes
 git status
-git commit -am "some msg"								commit changes
-git push origin master									push back to main repo
+git commit -am "some msg"				commit changes
+git push origin master					push back to main repo
 
 GPIO
 ====
-pinout													show pinout
-ls /dev | grep spi										is spi enabled?
-ls /dev | grep i2c 										is i2c enabled?
-sudo raspi-config										enable peripherals / ssh
+pinout							show pinout
+ls /dev | grep spi					is spi enabled?
+ls /dev | grep i2c 					is i2c enabled?
+sudo raspi-config					enable peripherals / ssh
 
+Picocom
+=======
+
+old brd...
+picocom -b 19200 -r -l /dev/ttyAMA0
+
+new brd...
+picocom -b 19200 -r -l /dev/ttyS0

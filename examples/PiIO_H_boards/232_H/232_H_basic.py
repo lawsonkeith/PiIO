@@ -31,7 +31,15 @@ o5 = LED(io.O5);
 o6 = PWMLED(io.O6,True,0,1000);
 o7 = LED(io.O7); 
 o8 = LED(io.O8); 
-ser = serial.Serial('/dev/ttyAMA0',9600,timeout=1)
+
+# select location of UART
+type = input("Pi 3B 4 or Zero? y/n: ")
+if type.lower() == 'y':
+	print("Newer board selected")
+	ser = serial.Serial('/dev/ttyS0',19200,timeout=1)
+else:
+	print("Older board selected")
+	ser = serial.Serial('/dev/ttyAMA0',19200,timeout=1)
 
 i1 = Button(io.I1,pull_up=False); 
 i2 = Button(io.I2,pull_up=False); 

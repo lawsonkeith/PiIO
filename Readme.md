@@ -14,8 +14,12 @@ Read the admin page for information on installing the packages.
 
 A description of the recources available per board is available here:
 
+### Gen 2
 * [PiIO-232-H](./docs/Readme_232_H.md)
 * [PiIO-DO-H](./docs/Readme_DO_H.md)
+* [PiIO-DIO-H](./docs/Readme_DIO_H.md)
+
+### Gen 1
 * [PiIO-DIO](./docs/Readme_DIO12.md)
 * [PiIO-ADIO](./docs/Readme_ADIO.md)
 

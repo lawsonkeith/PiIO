@@ -1,7 +1,7 @@
 #  PiIO General library module ===========================
 #
-#  K Lawson June 2021
-# 
+#  K Lawson 2021
+#
 #  see https://gpiozero.readthedocs.io/en/stable/recipes.html
 #  for info on GPIOZero
 #
@@ -80,7 +80,7 @@ class PiIO_timer:
 	start_time = 0
 
 	def __init__(self):
-		self.start_time = time.time() 
+		self.start_time = time.time()
 
 	def reset(self):
 		self.start_time = time.time()
@@ -122,7 +122,7 @@ class PiIO_RunEvery:
 
 	def set_time_msecs(self,time_span):
 		self.time_span = time_span / 1000.0
- 
+
 
 
 # Moving (exponential) average function
@@ -182,7 +182,7 @@ class PiIO_Scale:
 
 	def scale(self,raw):
 		m = (self.smax-self.smin) / (self.rmax-self.rmin)
-		c = self.smax - (m * self.rmax) 
+		c = self.smax - (m * self.rmax)
 		return raw * m + c
 
 # Rising edge detector
@@ -198,7 +198,7 @@ class PiIO_Redge:
 			self.last_state = state
 			return True
 
-		self.last_state = state   
+		self.last_state = state
 		return False
 
 
@@ -215,12 +215,12 @@ class PiIO_Fedge:
 			self.last_state = state
 			return True
 
-		self.last_state = state   
+		self.last_state = state
 		return False
 
 # Timed pulse function
 # On a REDGE set the output high for time period
-# 
+#
 class PiIO_TP:
 	last_state=0
 	# pulse length
@@ -366,18 +366,18 @@ class PiIO_Analog:
 	def get_scaled(self,channel):
 		data = 0;
 		data = self.adc.read_adc(channel, self.gain)
-		# ADC input impedance is 6MR in 2V gain 
+		# ADC input impedance is 6MR in 2V gain
 		# Rratio	0.2006
-		# Vmax		10V	
-		# Va dc@MAX	2.006 V	
+		# Vmax		10V
+		# Va dc@MAX	2.006 V
 		# Raw@MAX V	2006
 		#
-		# RawToVolts Scale		0.00492 
+		# RawToVolts Scale		0.00492
 		# data *= 4.92 / 1000 this was wrong did not take into account ADC resistance
 		data *= 4.985 / 1000
 		time.sleep(.001)
 		return data #(volts)
-	
+
 	def get_temp(self):
 		tempC = self.max.readTemp()
 		return tempC
@@ -511,7 +511,71 @@ class PiIO_DO_H_Mapper(object):
 	O23 = 26
 	O24 = 20
 	RUN = 21
-	
+
+class PiIO_DIO_H_Mapper(object):
+	# Map IO numbers to GPIO Numbers
+	O1 = 15
+	O2 = 17
+	O3 = 18
+	O4 = 27
+	O5 = 22
+	O6 = 23
+	O7 = 24
+	O8 = 10
+	O9 = 9
+	O10 = 12
+	O11 = 13
+	O12 = 19
+
+	I1 = 14
+	I2 = 21
+	I3 = 4
+	I4 = 25
+	I5 = 11
+	I6 = 7
+	I7 = 0
+	I8 = 5
+	I9 = 6
+	I10 = 26
+	I11 = 16
+	I12 = 20
+
+	RUN = 1
+
+	def __setattr__(self, *_):
+		pass
+
+
+# Old version - do not use
+class PiIO_DIO_H_Mapper_REV_0_2(object):
+	# Map IO numbers to GPIO Numbers
+	O1 = 15
+	O2 = 17
+	O3 = 18
+	O4 = 27
+	O5 = 22
+	O6 = 23
+	O7 = 24
+	O8 = 10
+	O9 = 9
+	O10 = 12
+	O11 = 13
+	O12 = 19
+
+	I1 = 2
+	I2 = 3
+	I3 = 4
+	I4 = 25
+	I5 = 11
+	I6 = 1
+	I7 = 0
+	I8 = 5
+	I9 = 6
+	I10 = 26
+	I11 = 16
+	I12 = 20
+
+	RUN = 21
 
 	def __setattr__(self, *_):
 		pass

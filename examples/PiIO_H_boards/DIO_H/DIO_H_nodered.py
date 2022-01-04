@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 #
-#  example usage of DIO PCB with node red UI
-#  =========================================
+#  example usage of DIO H PCB with node red UI
+#  ===========================================
 # 
 #  see https://gpiozero.readthedocs.io/en/stable/recipes.html
 #  for info on GPIOZero
@@ -9,25 +9,34 @@
 #  1. This example powers a contactor on DO6, but once pulled in uses PWM to reduce current draw
 #  2. Also O1 can be controlled via a node-red slider
 #  3. And any digital input is read and it's value passed back to th UI
-# 
+#  
+#  Instructions
+#  ------------
+#  1. start node red [node-red]
+#  2. Navigate to PI_IP:1880 in a browser
+#  3. On node red import->flow->clipboard, past the json text file data in there (from DIO_H_nodered.json)
+#  4. Flows should appear, double click an mqtt node and set the pimoz server IP address to the PI IP address (purple box).
+#		(or edit the json file and update the IP address in there before importing)
+#  5. Deploy
+#  6. UI will be at PI IP e.g. http://192.168.1.42:1880/ui/
+#  7. Run python program ('./DIO_H_nodered.py')
+#  8. The 'python->program cycle' indicator should now increment
+#  9. 'Input' Section reads digital input status, 'output' section simulates a DC motor controller
+#
 from gpiozero import Button
 from gpiozero import PWMLED
 from gpiozero import LED 	# in GPIOZero outputs are called LEDs???
 from time import sleep
-from PiIO import PiIO_DO24_Mapper
-from PiIO import PiIO_DIO12_Mapper
+from PiIO import PiIO_DIO_H_Mapper
 from PiIO import PiIO_col
 from PiIO import PiIO_timer
 from PiIO import PiIO_TON
 import paho.mqtt.client as mqtt #import the client1
 
 
-
-
-
 # @@@@ Hardware init @@@@
 #
-io = PiIO_DIO12_Mapper()
+io = PiIO_DIO_H_Mapper()
 o1 = PWMLED(io.O1,True,0,1000)	# PWM
 o2 = LED(io.O2)
 o3 = LED(io.O3)
@@ -57,7 +66,6 @@ i12 = Button(io.I12,pull_up=False)
 col=PiIO_col()
 motor_timer = PiIO_TON(0,2) # 2s timer
 run_timer = PiIO_timer() # run timer
-enable = LED(io.OE);
 run = LED(io.RUN);
 count=0
 servo_setp=0
@@ -94,7 +102,6 @@ client.subscribe("mem/#")
 
 # Enable outputs
 #
-enable.on()
 
 #
 print (col.HOME,col.CLR,col.GREENB,col.BLACK," PiIO Example program - nodered_DIO \n",col.ENDC,sep='')
@@ -118,6 +125,9 @@ while True:
 		client.publish("mem/run_time","--")
 	input=0
 
+
+	# read inputs and report on UI which button has been pressed
+	#
 	if  i1.value == 1:
 		print("i1 pressed")
 		input=1

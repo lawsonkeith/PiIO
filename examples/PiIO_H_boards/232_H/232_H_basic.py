@@ -12,7 +12,8 @@ from time import sleep
 from PiIO import PiIO_232_H_Mapper
 from PiIO import PiIO_col
 import serial
-	
+import os.path
+
 # @@@@ Example code here @@@@
 #
 # attach a LED to Output 6 on the board.
@@ -32,14 +33,17 @@ o6 = PWMLED(io.O6,True,0,1000);
 o7 = LED(io.O7); 
 o8 = LED(io.O8); 
 
-# select location of UART
-type = input("Pi 3B 4 or Zero? y/n: ")
-if type.lower() == 'y':
-	print("Newer board selected")
+# probe serial port...
+if os.path.exists('/dev/ttyS0'):
+	# 3,4 or zero 
 	ser = serial.Serial('/dev/ttyS0',19200,timeout=1)
-else:
-	print("Older board selected")
+elif os.path.exists('/dev/ttyAMA0'):	
+	# older gen 1,2 etc
 	ser = serial.Serial('/dev/ttyAMA0',19200,timeout=1)
+else:
+	# not enabled, tell user to enable it
+	print("Fatal error: no serial port detected, please enable in raspi-config & disable SPI");	
+	quit()
 
 i1 = Button(io.I1,pull_up=False); 
 i2 = Button(io.I2,pull_up=False); 

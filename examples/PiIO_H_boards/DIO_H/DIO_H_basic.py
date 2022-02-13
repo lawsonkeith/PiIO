@@ -56,6 +56,7 @@ run = LED(io.RUN);
 # @@@@ END HW INIT @@@@
 #
 print (col.HOME,col.CLR,col.GREENB,col.BLACK," PiIO Example program - basic_DIO_H \n",col.ENDC,sep='')
+print ("0. setup I2C off, SPI off, Serial off in raspi-config")
 print ("1. Program to echo when input pins are pulled high")
 print ("2. We will also set corresponding output high when this happens")
 print ("3. The output voltage will be Vfield")

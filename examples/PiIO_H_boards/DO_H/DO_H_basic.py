@@ -20,7 +20,7 @@ from PiIO import PiIO_col
 
 # @@@@ Hardware init @@@@
 #
-io = PiIO2_DO_H_Mapper()
+io = PiIO_DO_H_Mapper()
 o1 = LED(io.O1); 
 o2 = LED(io.O2); 
 o3 = LED(io.O3); 

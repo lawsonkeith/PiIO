@@ -514,7 +514,7 @@ class PiIO_DO_H_Mapper(object):
 
 class PiIO_DIO_H_Mapper(object):
 	# Map IO numbers to GPIO Numbers
-	O1 = 15
+	O1 = 14
 	O2 = 17
 	O3 = 18
 	O4 = 27
@@ -527,20 +527,20 @@ class PiIO_DIO_H_Mapper(object):
 	O11 = 13
 	O12 = 19
 
-	I1 = 14
+	I1 = 15
 	I2 = 21
 	I3 = 4
 	I4 = 25
 	I5 = 11
-	I6 = 7
-	I7 = 0
+	I6 = 8
+	I7 = 7
 	I8 = 5
 	I9 = 6
 	I10 = 26
 	I11 = 16
 	I12 = 20
 
-	RUN = 1
+	RUN = 3
 
 	def __setattr__(self, *_):
 		pass

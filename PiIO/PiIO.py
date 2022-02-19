@@ -512,6 +512,30 @@ class PiIO_DO_H_Mapper(object):
 	O24 = 20
 	RUN = 21
 
+
+class PiIO_DIO_HZ_Mapper(object):
+	# Map IO numbers to GPIO Numbers
+	O1 = 18
+	O2 = 27
+	O3 = 22
+	O4 = 24
+	O5 = 25
+	O6 = 12
+	O7 = 13
+	O8 = 19
+
+	I1 = 10
+	I2 = 9
+	I3 = 11
+	I4 = 8
+
+	RUN = 16
+
+	def __setattr__(self, *_):
+		pass
+
+
+# Old version - do not use
 class PiIO_DIO_H_Mapper(object):
 	# Map IO numbers to GPIO Numbers
 	O1 = 14
@@ -541,41 +565,6 @@ class PiIO_DIO_H_Mapper(object):
 	I12 = 20
 
 	RUN = 3
-
-	def __setattr__(self, *_):
-		pass
-
-
-# Old version - do not use
-class PiIO_DIO_H_Mapper_REV_0_2(object):
-	# Map IO numbers to GPIO Numbers
-	O1 = 15
-	O2 = 17
-	O3 = 18
-	O4 = 27
-	O5 = 22
-	O6 = 23
-	O7 = 24
-	O8 = 10
-	O9 = 9
-	O10 = 12
-	O11 = 13
-	O12 = 19
-
-	I1 = 2
-	I2 = 3
-	I3 = 4
-	I4 = 25
-	I5 = 11
-	I6 = 1
-	I7 = 0
-	I8 = 5
-	I9 = 6
-	I10 = 26
-	I11 = 16
-	I12 = 20
-
-	RUN = 21
 
 	def __setattr__(self, *_):
 		pass

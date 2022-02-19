@@ -33,7 +33,7 @@ GAIN = 2
 try:
 	adc = PiIO_Analog(GAIN)
 except :
-	print("IO Exception - check I2C and SPI enabled in raspi-config, disable UART")	
+	print("IO Exception - check I2C and SPI enabled in raspi-config, disable Serial")	
 	quit()
 run = LED(adc.RUN)
 col = PiIO_col()
@@ -58,6 +58,7 @@ OE = LED(adc.OE)
 # then PWM at 10Hz, cycle duty cycle then.
 #
 print (col.HOME,col.CLR,col.GREENB,col.BLACK," PiIO Example program - ADIO_basic \n",col.ENDC,sep='')
+print ("0. Required raspi-config I2C:enabled SPI:enabled Serial:disabled")
 print ("1. Program to cycle through and test all IO")
 print ("2. Analog inputs, read 1-4 0-10V/0-20mA")
 print ("3. Auto set analog outputs 1-2 0-10V")

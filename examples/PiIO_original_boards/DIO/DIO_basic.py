@@ -60,6 +60,7 @@ enable.on()
 
 #
 print (col.HOME,col.CLR,col.GREENB,col.BLACK," PiIO Example program - basic_DIO \n",col.ENDC,sep='')
+print ("0. Required raspi-config I2C:disabled SPI:disabled Serial:disabled")
 print ("1. Program to echo when input pins are pulled high")
 print ("2. We will also set corresponding output high wewn this happens")
 print ("3. The output voltage will be Vfield - 1.2V")

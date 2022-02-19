@@ -264,6 +264,7 @@ def on_mqt_message(client, userdata, message):
 # then PWM at 10Hz, cycle duty cycle then.
 #
 RUN.blink(.1,.9)
+print ("Required raspi-config I2C:enabled SPI:enabled Serial:disabled")
 OE.on()
 #
 broker_address="127.0.0.1" 

@@ -18,6 +18,8 @@ A description of the recources available per board is available here:
 * [PiIO-232-H](./docs/Readme_232_H.md)
 * [PiIO-DO-H](./docs/Readme_DO_H.md)
 * [PiIO-DIO-H](./docs/Readme_DIO_H.md)
+* [PiIO-DIO-HZ](./docs/Readme_DIO_HZ.md)
+
 
 ### Gen 1
 * [PiIO-DIO](./docs/Readme_DIO12.md)

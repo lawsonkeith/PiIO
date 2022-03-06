@@ -16,9 +16,6 @@ Python 3 example programs are provided to allow you to quickly explore the board
 Example | Description
 --- | ---
 DO_H_basic.py | simple io check program
-DO_H_concurrent.py | As above but implementing basic concurrency 
+DO_H_concurrent.py | As above but implementing basic concurrency
 PiIO.py | Low level library holding PCB abstractions and utility functions
-basic_functs.py | examples for PiIO utility funciotns such as timer functs
-
-
-
+../basic_functs.py | examples for PiIO utility funciotns such as timer functs

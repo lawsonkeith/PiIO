@@ -2,14 +2,14 @@
 #
 #  example usage of DIO H PCB with node red UI
 #  ===========================================
-# 
+#
 #  see https://gpiozero.readthedocs.io/en/stable/recipes.html
 #  for info on GPIOZero
 #
 #  1. This example powers a contactor on DO6, but once pulled in uses PWM to reduce current draw
 #  2. Also O1 can be controlled via a node-red slider
 #  3. And any digital input is read and it's value passed back to th UI
-#  
+#
 #  Instructions
 #  ------------
 #  1. start node red [node-red]
@@ -43,7 +43,7 @@ o3 = LED(io.O3)
 o4 = LED(io.O4)
 o5 = LED(io.O5)
 o6 = PWMLED(io.O6,True,0,1000) # contactor
-o7 = LED(io.O7) 
+o7 = LED(io.O7)
 o8 = LED(io.O8)
 
 i1 = Button(io.I1,pull_up=False)
@@ -65,19 +65,19 @@ run.blink(.100,.900) # run LED
 def on_mqt_message(client, userdata, message):
 	global servo_setp, motor_enable
 
-	if 'motor' in message.topic:	
+	if 'motor' in message.topic:
 		motor_enable = (message.payload.decode('utf-8').lower() == 'true')
 		if motor_enable :
 			run_timer.reset()
 			print("on")
 
-	if 'servo' in message.topic:	
+	if 'servo' in message.topic:
 		servo_setp = float(message.payload.decode('utf-8'))
 		print(servo_setp)
 
 # create client
 #
-broker_address="127.0.0.1" 
+broker_address="127.0.0.1"
 client = mqtt.Client("pimoz") #create new instance
 client.on_message=on_mqt_message #attach function to callback
 client.connect(broker_address) #connect to broker
@@ -105,7 +105,7 @@ print ()
 while True:
 	count+=1
 	# publish topics over mqtt to node red
-	client.publish("mem/count",str(count))	
+	client.publish("mem/count",str(count))
 	client.publish("mem/input",str(input))
 	if motor_enable :
 		client.publish("mem/run_time",run_timer.read())
@@ -128,30 +128,6 @@ while True:
 	if i4.value == 1:
 		print("i4 pressed")
 		input=4
-	if i5.value == 1:
-		print("i5 pressed")
-		input=5
-	if i6.value == 1:
-		print("i6 pressed")
-		input=6
-	if i7.value == 1:
-		print("i7 pressed")
-		input=7
-	if i8.value == 1:
-		print("i8 pressed")
-		input=8
-	if i9.value == 1:
-		print("i9 pressed")
-		input=9
-	if i10.value == 1:
-		print("i10 pressed")
-		input=10
-	if i11.value == 1:
-		print("i11 pressed")
-		input=11
-	if i12.value == 1:
-		print("i12 pressed")
-		input=12
 
 
 	# motor on output 6 - implement power saving control of motor
@@ -165,7 +141,7 @@ while True:
 			# max op to pull in contactor
 			o6.value = 1.0
 			# print("hi pwr")
-				
+
 	else:
 		# leave it off
 		o6.value = 0

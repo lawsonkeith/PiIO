@@ -1,6 +1,6 @@
 #!/usr/bin/python3
-#  example usage of PiIO DIO H PCB
-#  ===============================
+#  example usage of PiIO DIO HZ PCB
+#  ================================
 # 
 #  see https://gpiozero.readthedocs.io/en/stable/recipes.html
 #  for info on GPIOZero

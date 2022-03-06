@@ -5,7 +5,7 @@
 ### Description
 The PCB has the following functionality:
 
-* One 232 port with RTS/CTS control 
+* One 232 port with RTS/CTS control
 * 8 Digital outputs
 * 8 Digital inputs
 * One RUN LED
@@ -19,9 +19,5 @@ Example | Description
 --- | ---
 232_H_basic.py | simple IO check program
 232_H_Protocolconv.py | Basic protocol converter example to read gyro string
-232_H_ProtocolconvErrChcke.py | Basic protocol converter example to read gyro string with error checking
-PiIO.py | Low level library holding PCB abstractions and utility functions
-basic_functs.py | examples for PiIO utility funciotns such as timer functs
-
-
-
+232_H_ProtocolconvErrCheck.py | Basic protocol converter example to read gyro string with error checking
+../basic_functs.py | examples for PiIO utility functions such as timer functs etc

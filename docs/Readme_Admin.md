@@ -54,8 +54,7 @@ __linux packages__
 Use [sudo raspi-config] to perform the following basic tasks.
 
 * __Enable ssh__ required for remote admin i.e. no keyboard and monitor
-* __Enable spi__ required for ADIO board
-* __Enable i2c__ required for ADIO board
+* __SPI / I2C / Serial__ board specific, see boar docs for info.  Must be set correctly!
 * __Enable wifi__ required if LAN cable not used
 
 Further notes on how to do this can be found here:  

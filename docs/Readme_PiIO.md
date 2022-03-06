@@ -3,11 +3,22 @@
 The PiIO user library is a library containing functions to:
 
 * Control specific boards
-* Provide generic control functions 
+* Provide generic control functions
 
 ![](https://github.com/lawsonkeith/PiIO/raw/master/images/framework.PNG)
 
-### Board specific API
+### Board specific API - H boards
+Gen 2 board mappers.
+
+| Class | Applies to | Description |
+| --- | --- | --- |
+| PiIO_232_H_Mapper | PiIO 232 H PCB | Class for controlling PCB |
+| PiIO_DIO_H_Mapper | PiIO DIO H PCB | Class for controlling PCB |
+| PiIO_DIO_HZ_Mapper | PiIO DIO HZ PCB | Class for controlling PCB |
+| PiIO_DO_H_Mapper | PiIO DO H PCB | Class for controlling PCB |
+
+### Board specific API - original boards
+Gen 1 board mappers.
 
 | Class | Applies to | Description |
 | --- | --- | --- |
@@ -36,8 +47,8 @@ The PiIO user library is a library containing functions to:
 
 ### Usage
 
-The program [basic_functs.py] provides examples of the generic functions and the board specific examples provide examples of the others.  
-The file [PiIO.py] provides an in depth description of the function calls.  
+The program [basic_functs.py] provides examples of the generic functions and the board specific examples provide examples of the others.
+The file [PiIO.py] provides an in depth description of the function calls.
 The API can be accessed from within python as follows:
 
 ```python
@@ -48,6 +59,11 @@ from PiIO import PiIO_getc
 from PiIO import PiIO_timer
 from PiIO import PiIO_EMA
 ```
+
+### GPIOZero
+The examples use GPIO Zero, it will work with other PI GPIO class's as well e.g. RPI.gpio.
+For digital inputs not pullups must be set to OFF, if your IO needs a pullup you will need to add it externally.
+
 
 ### Modifying the library
 

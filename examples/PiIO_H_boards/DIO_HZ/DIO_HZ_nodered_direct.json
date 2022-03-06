@@ -1,0 +1,463 @@
+[
+    {
+        "id": "9968d9d3.819618",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "a49bedf1.8298a",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "bd33b89a.4d8648",
+        "type": "ui_tab",
+        "z": "",
+        "name": "Home",
+        "icon": "dashboard",
+        "order": "1"
+    },
+    {
+        "id": "e2cd1e16.c476f",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "pimoz",
+        "broker": "192.168.1.42",
+        "port": "1883",
+        "clientid": "test-client",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    },
+    {
+        "id": "f49fc756.cdfc68",
+        "type": "ui_switch",
+        "z": "a49bedf1.8298a",
+        "tab": "bd33b89a.4d8648",
+        "name": "RUN",
+        "topic": "",
+        "group": "System",
+        "order": 1,
+        "onvalue": "1",
+        "offvalue": "0",
+        "x": 114.5,
+        "y": 39,
+        "wires": [
+            [
+                "4e299e71.568a8"
+            ]
+        ]
+    },
+    {
+        "id": "c514d3a6.c6ef1",
+        "type": "ui_switch",
+        "z": "a49bedf1.8298a",
+        "tab": "bd33b89a.4d8648",
+        "name": "OP1",
+        "topic": "",
+        "group": "Outputs",
+        "order": "2",
+        "onvalue": "1",
+        "offvalue": "0",
+        "x": 91.5,
+        "y": 176,
+        "wires": [
+            [
+                "266e6264.f7c67e"
+            ]
+        ]
+    },
+    {
+        "id": "6f8fd8bc.9a1998",
+        "type": "ui_switch",
+        "z": "a49bedf1.8298a",
+        "tab": "bd33b89a.4d8648",
+        "name": "OP2",
+        "topic": "",
+        "group": "Outputs",
+        "order": "3",
+        "onvalue": "1",
+        "offvalue": "0",
+        "x": 88.5,
+        "y": 216,
+        "wires": [
+            [
+                "3d5df162.abf43e"
+            ]
+        ]
+    },
+    {
+        "id": "3b01a323.faf92c",
+        "type": "ui_switch",
+        "z": "a49bedf1.8298a",
+        "tab": "bd33b89a.4d8648",
+        "name": "OP3",
+        "topic": "",
+        "group": "Outputs",
+        "order": "4",
+        "onvalue": "1",
+        "offvalue": "0",
+        "x": 87.5,
+        "y": 255,
+        "wires": [
+            [
+                "9de5f70e.0eed38"
+            ]
+        ]
+    },
+    {
+        "id": "bcf139d1.41dec8",
+        "type": "ui_switch",
+        "z": "a49bedf1.8298a",
+        "tab": "bd33b89a.4d8648",
+        "name": "OP5",
+        "topic": "",
+        "group": "Outputs",
+        "order": "6",
+        "onvalue": "1",
+        "offvalue": "0",
+        "x": 84,
+        "y": 329,
+        "wires": [
+            [
+                "d7ea2666.6db318"
+            ]
+        ]
+    },
+    {
+        "id": "af276252.004f8",
+        "type": "ui_switch",
+        "z": "a49bedf1.8298a",
+        "tab": "bd33b89a.4d8648",
+        "name": "OP4",
+        "topic": "",
+        "group": "Outputs",
+        "order": "5",
+        "onvalue": "1",
+        "offvalue": "0",
+        "x": 88,
+        "y": 292,
+        "wires": [
+            [
+                "792d6db3.b149d4"
+            ]
+        ]
+    },
+    {
+        "id": "99b0bd15.342de",
+        "type": "ui_switch",
+        "z": "a49bedf1.8298a",
+        "tab": "bd33b89a.4d8648",
+        "name": "OP7",
+        "topic": "",
+        "group": "Outputs",
+        "order": "8",
+        "onvalue": "1",
+        "offvalue": "0",
+        "x": 81,
+        "y": 400,
+        "wires": [
+            [
+                "81380680.6f2dc8"
+            ]
+        ]
+    },
+    {
+        "id": "fe1b0d91.1b786",
+        "type": "ui_switch",
+        "z": "a49bedf1.8298a",
+        "tab": "bd33b89a.4d8648",
+        "name": "OP6",
+        "topic": "",
+        "group": "Outputs",
+        "order": "7",
+        "onvalue": "1",
+        "offvalue": "0",
+        "x": 81,
+        "y": 366,
+        "wires": [
+            [
+                "692a4d90.7177c4"
+            ]
+        ]
+    },
+    {
+        "id": "8d505fd6.6a691",
+        "type": "ui_switch",
+        "z": "a49bedf1.8298a",
+        "tab": "bd33b89a.4d8648",
+        "name": "OP8",
+        "topic": "",
+        "group": "Outputs",
+        "order": "9",
+        "onvalue": "1",
+        "offvalue": "0",
+        "x": 79,
+        "y": 435,
+        "wires": [
+            [
+                "bc4aeaa8.f55ff8"
+            ]
+        ]
+    },
+    {
+        "id": "266e6264.f7c67e",
+        "type": "rpi-gpio out",
+        "z": "a49bedf1.8298a",
+        "name": "",
+        "pin": "12",
+        "set": true,
+        "level": "0",
+        "freq": "",
+        "out": "out",
+        "x": 272,
+        "y": 173,
+        "wires": []
+    },
+    {
+        "id": "3d5df162.abf43e",
+        "type": "rpi-gpio out",
+        "z": "a49bedf1.8298a",
+        "name": "",
+        "pin": "13",
+        "set": true,
+        "level": "0",
+        "freq": "",
+        "out": "out",
+        "x": 270,
+        "y": 214,
+        "wires": []
+    },
+    {
+        "id": "9de5f70e.0eed38",
+        "type": "rpi-gpio out",
+        "z": "a49bedf1.8298a",
+        "name": "",
+        "pin": "15",
+        "set": true,
+        "level": "0",
+        "freq": "",
+        "out": "out",
+        "x": 269,
+        "y": 254,
+        "wires": []
+    },
+    {
+        "id": "792d6db3.b149d4",
+        "type": "rpi-gpio out",
+        "z": "a49bedf1.8298a",
+        "name": "",
+        "pin": "18",
+        "set": true,
+        "level": "0",
+        "freq": "",
+        "out": "out",
+        "x": 259,
+        "y": 288,
+        "wires": []
+    },
+    {
+        "id": "d7ea2666.6db318",
+        "type": "rpi-gpio out",
+        "z": "a49bedf1.8298a",
+        "name": "",
+        "pin": "22",
+        "set": true,
+        "level": "0",
+        "freq": "",
+        "out": "out",
+        "x": 265,
+        "y": 329,
+        "wires": []
+    },
+    {
+        "id": "692a4d90.7177c4",
+        "type": "rpi-gpio out",
+        "z": "a49bedf1.8298a",
+        "name": "",
+        "pin": "32",
+        "set": true,
+        "level": "0",
+        "freq": "",
+        "out": "out",
+        "x": 265,
+        "y": 369,
+        "wires": []
+    },
+    {
+        "id": "81380680.6f2dc8",
+        "type": "rpi-gpio out",
+        "z": "a49bedf1.8298a",
+        "name": "",
+        "pin": "13",
+        "set": true,
+        "level": "0",
+        "freq": "",
+        "out": "out",
+        "x": 265,
+        "y": 402,
+        "wires": []
+    },
+    {
+        "id": "bc4aeaa8.f55ff8",
+        "type": "rpi-gpio out",
+        "z": "a49bedf1.8298a",
+        "name": "",
+        "pin": "35",
+        "set": true,
+        "level": "0",
+        "freq": "",
+        "out": "out",
+        "x": 264,
+        "y": 438,
+        "wires": []
+    },
+    {
+        "id": "e24eae9d.27abf",
+        "type": "rpi-gpio in",
+        "z": "a49bedf1.8298a",
+        "name": "",
+        "pin": "19",
+        "intype": "down",
+        "debounce": "25",
+        "read": true,
+        "x": 514.5,
+        "y": 99,
+        "wires": [
+            [
+                "5f559273.17326c"
+            ]
+        ]
+    },
+    {
+        "id": "84204bf9.24b968",
+        "type": "rpi-gpio in",
+        "z": "a49bedf1.8298a",
+        "name": "",
+        "pin": "21",
+        "intype": "down",
+        "debounce": "25",
+        "read": true,
+        "x": 512,
+        "y": 143,
+        "wires": [
+            [
+                "7be42741.a74298"
+            ]
+        ]
+    },
+    {
+        "id": "5f559273.17326c",
+        "type": "ui_text",
+        "z": "a49bedf1.8298a",
+        "tab": "bd33b89a.4d8648",
+        "name": "IP1",
+        "group": "Inputs",
+        "order": 1,
+        "format": "{{msg.payload}}",
+        "x": 672.5,
+        "y": 101,
+        "wires": []
+    },
+    {
+        "id": "7be42741.a74298",
+        "type": "ui_text",
+        "z": "a49bedf1.8298a",
+        "tab": "bd33b89a.4d8648",
+        "name": "IP2",
+        "group": "Inputs",
+        "order": "2",
+        "format": "{{msg.payload}}",
+        "x": 672,
+        "y": 145,
+        "wires": []
+    },
+    {
+        "id": "f65ce9a5.e440b8",
+        "type": "rpi-gpio in",
+        "z": "a49bedf1.8298a",
+        "name": "",
+        "pin": "23",
+        "intype": "down",
+        "debounce": "25",
+        "read": true,
+        "x": 511,
+        "y": 189,
+        "wires": [
+            [
+                "d8212e8b.145f7"
+            ]
+        ]
+    },
+    {
+        "id": "6b0bc9cd.fb77c8",
+        "type": "rpi-gpio in",
+        "z": "a49bedf1.8298a",
+        "name": "",
+        "pin": "24",
+        "intype": "down",
+        "debounce": "25",
+        "read": true,
+        "x": 508.5,
+        "y": 233,
+        "wires": [
+            [
+                "7ff9239a.2741cc"
+            ]
+        ]
+    },
+    {
+        "id": "d8212e8b.145f7",
+        "type": "ui_text",
+        "z": "a49bedf1.8298a",
+        "tab": "bd33b89a.4d8648",
+        "name": "IP3",
+        "group": "Inputs",
+        "order": "3",
+        "format": "{{msg.payload}}",
+        "x": 669,
+        "y": 191,
+        "wires": []
+    },
+    {
+        "id": "7ff9239a.2741cc",
+        "type": "ui_text",
+        "z": "a49bedf1.8298a",
+        "tab": "bd33b89a.4d8648",
+        "name": "IP4",
+        "group": "Inputs",
+        "order": "4",
+        "format": "{{msg.payload}}",
+        "x": 668.5,
+        "y": 235,
+        "wires": []
+    },
+    {
+        "id": "4e299e71.568a8",
+        "type": "rpi-gpio out",
+        "z": "a49bedf1.8298a",
+        "name": "",
+        "pin": "36",
+        "set": true,
+        "level": "0",
+        "freq": "",
+        "out": "out",
+        "x": 276,
+        "y": 36,
+        "wires": []
+    }
+]

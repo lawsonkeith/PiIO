@@ -1,6 +1,6 @@
 #  PiIO General library module ===========================
 #
-#  K Lawson 2021
+#  K Lawson 2022
 #
 #  see https://gpiozero.readthedocs.io/en/stable/recipes.html
 #  for info on GPIOZero
@@ -316,9 +316,9 @@ class PiIO_TOF:
 
 
 #########################################################################
-# EARLY BOARDS NOT CONFORMING TO HAT MECHANICAL SPECIFICATION			#
-# 1. Board is not rectangular											#
-# 2. Uses UDN series of darlington drivers								#
+# EARLY BOARDS NOT CONFORMING TO HAT MECHANICAL SPECIFICATION		#
+# 1. Board is not rectangular						#
+# 2. Uses UDN series of darlington drivers				#
 #########################################################################
 
 # Class to interface to the PIIO analog board
@@ -568,3 +568,70 @@ class PiIO_DIO_H_Mapper(object):
 
 	def __setattr__(self, *_):
 		pass
+
+
+
+#
+class PiIO_Analog_H_Mapper:
+	# GPIO Mapping
+	O1 = 14
+	O2 = 17
+	O3 = 18
+	O4 = 27
+	O5 = 22
+	O6 = 23
+	O7 = 24
+	O8 = 10
+	RUN=25
+	# GPIO Mapping
+	I1 = 11
+	I2 = 8
+	I3 = 7
+	I4 = 5
+	I5 = 6
+	I6 = 12
+	I7 = 13
+	I8 = 19
+	I9 = 16
+	I10 = 26
+	I11 = 20
+	I12 = 21
+	# Constants
+	gain = 1;
+	data = 0;
+
+	def __init__(self,gain):
+		self.adc = ADS1015()
+		self.gain = gain
+		#csPin = 18
+		#misoPin = 9
+		#mosiPin = 10
+		#clkPin = 11
+
+		#self.max = PiIO.PiIO_max31865.max31865(csPin,misoPin,mosiPin,clkPin)
+
+	def get_raw(self,channel):
+		data = 0;
+		data =  self.adc.read_adc(channel, self.gain)
+		time.sleep(.001)
+		return data  # 2032 is 10V @ gain of 2
+
+	def get_scaled(self,channel):
+		data = 0;
+		data = self.adc.read_adc(channel, self.gain)
+		# ADC input impedance is 6MR in 2V gain
+		# Rratio	0.2006
+		# Vmax		10V
+		# Va dc@MAX	2.006 V
+		# Raw@MAX V	2006
+		#
+		# RawToVolts Scale		0.00492
+		# data *= 4.92 / 1000 this was wrong did not take into account ADC resistance
+		data *= 4.985 / 1000
+		time.sleep(.001)
+		return data #(volts)
+
+	#def get_temp(self):
+	#	tempC = self.max.readTemp()
+	#	return tempC
+

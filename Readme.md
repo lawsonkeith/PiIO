@@ -19,12 +19,13 @@ A description of the resources available per board is available here:
 * [PiIO-DO-H](./docs/Readme_DO_H.md)
 * [PiIO-DIO-H](./docs/Readme_DIO_H.md)
 * [PiIO-DIO-HZ](./docs/Readme_DIO_HZ.md)
+* [PiIO-ADIO-H](./docs/Readme_ADIO_H.md)
 
 
 ### Gen 1 - original boards
 * [PiIO-DIO](./docs/Readme_DIO12.md)
 * [PiIO-ADIO](./docs/Readme_ADIO.md)
-
+* [PiIO-DO24](./docs/old/Readme_DO24.md)
 
 As well as a description of the four main software topics:
 
@@ -33,10 +34,6 @@ As well as a description of the four main software topics:
 * [Concurrency](docs/Readme_Concurrency.md)
 * [Node red](docs/Readme_NodeRed.md)
 
-
-## Archive
-Discontinued board information is archived here:
-* [PiIO-DO24](./docs/old/Readme_DO24.md)
 
 ## Porting
 Should you wish to port this to another language such as C++, refer to the PiIO.py file.

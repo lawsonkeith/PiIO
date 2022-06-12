@@ -3,56 +3,57 @@ Useful commands
 
 PiIO
 ====
-update_lib.sh					update lib with any changes made
+update_lib.sh					            update lib with any changes made
 
 Images
 ======
-convert -resize 50% source dest			resize images on command line using imagemagick
+sudo apt-get install imagemagick
+convert -resize 50% source dest			    resize images on command line using imagemagick
 convert PiIO_DIO.jpg -print "Size: %wx%h\n"	get img size
 
 Linux
 =====
-ATL1-12						new terminal
+ATL1-12						                new terminal
 
-sudo raspi-config				config
-sudo i2cdetect -y 1				detect i2c devices
+sudo raspi-config				            config
+sudo i2cdetect -y 1				            detect i2c devices
 sudo apt-get install i2cdetect
-sudo ps -A					show processes
+sudo ps -A					                show processes
 
-dmesg | grep					look at startup cmds
-top						performance tasks
-ifconfig					ip stuff
-man ls						manual
-df						show free space
+dmesg | grep					            look at startup cmds
+top						                    performance tasks
+ifconfig				                    ip stuff
+man ls						                manual
+df						                    show free space
 
 sudo mount /dev/sda1 /media/usb -o uid=pi,gid=pi		mount usb
 
 Nano
 ====
-nano /etc/nanorc				config
+nano /etc/nanorc				            config - set tabs 4, use spaces
 set linenumbers
-alt+s						scroll mode
-alt+u						undo
-ctrl/alt space					move 1 word
-ctrl w r 					search replace
-alt a 6 					select copy
-ctrl u						paste
-alt >													next buffer
-alt p 													whitespaces
-alt del													del line
+alt+s						                scroll mode
+alt+u						                undo
+ctrl/alt space					            move 1 word
+ctrl w r 					                search replace
+alt a 6 					                select copy
+ctrl u						                paste
+alt >										next buffer
+alt p 										whitespaces
+alt del										del line
 
 Serial
 ======
-stty -F /dev/ttyAMA0									get settings
-stty -F /dev/ttyAMA0 speed 19200						change baud to 19200
-cat < /dev/ttyAMA0										read serial port
-echo "hi" > /dev/ttyAMA0								echo chars to serial port 
+stty -F /dev/ttyAMA0						get settings
+stty -F /dev/ttyAMA0 speed 19200			change baud to 19200
+cat < /dev/ttyAMA0							read serial port
+echo "hi" > /dev/ttyAMA0					echo chars to serial port 
 
 
 Python
 ======
-pip3 install pyserial				get serial port lib
-sudo python3 setup.py install			install/update PiIO lib
+pip3 install pyserial				        get serial port lib
+sudo python3 setup.py install			    install/update PiIO lib
 
 Minicom
 ========
@@ -71,14 +72,15 @@ git push origin master					push back to main repo
 
 GPIO
 ====
-pinout							show pinout
-ls /dev | grep spi					is spi enabled?
-ls /dev | grep i2c 					is i2c enabled?
-sudo raspi-config					enable peripherals / ssh
+pinout							        show pinout
+ls /dev | grep spi					    is spi enabled?
+ls /dev | grep i2c 					    is i2c enabled?
+sudo raspi-config					    enable peripherals / ssh
 
 FTP
 ===
 Use filezilla port 22 sFTP 
+
 =======
 Picocom
 =======

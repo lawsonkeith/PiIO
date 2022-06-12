@@ -1,4 +1,4 @@
-## PiIO ADIO PCB
+## PiIO ADIO H PCB
 
 ![](https://github.com/lawsonkeith/PiIO/raw/master/images/PiIO_ADIO_H.jpg)
 
@@ -18,7 +18,7 @@ Python 3 example programs are provided to allow you to quickly explore the board
 
 Example | Description
 --- | ---
-ADIO_basic.py | Basic usage of analog PCB
+ADIO_H_basic.py | Basic usage of analog PCB
 
 
 
